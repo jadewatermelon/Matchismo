@@ -85,6 +85,7 @@
     self.game = nil;
     self.flipCount = 0;
     self.gameModeChanged.enabled = YES;
+    self.history = nil;
     [self updateUI];
 }
 
