@@ -23,6 +23,7 @@
 		E21D8FBE16B95FA300EB5477 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E21D8FBD16B95FA300EB5477 /* PlayingCard.m */; };
 		E21D8FC116B965DE00EB5477 /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E21D8FC016B965DE00EB5477 /* PlayingCardDeck.m */; };
 		E237F64B16BB608200FB7A52 /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = E237F64A16BB608200FB7A52 /* CardMatchingGame.m */; };
+		E2C3519B16BEE85D0028212B /* Images in Resources */ = {isa = PBXBuildFile; fileRef = E2C3519A16BEE85D0028212B /* Images */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		E21D8FC016B965DE00EB5477 /* PlayingCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCardDeck.m; path = Model/PlayingCardDeck.m; sourceTree = "<group>"; };
 		E237F64916BB608200FB7A52 /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardMatchingGame.h; path = Model/CardMatchingGame.h; sourceTree = "<group>"; };
 		E237F64A16BB608200FB7A52 /* CardMatchingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardMatchingGame.m; path = Model/CardMatchingGame.m; sourceTree = "<group>"; };
+		E2C3519A16BEE85D0028212B /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		E21D8F9816B88BEC00EB5477 /* Matchismo */ = {
 			isa = PBXGroup;
 			children = (
+				E2C3519A16BEE85D0028212B /* Images */,
 				E21D8FAA16B88BEC00EB5477 /* MainStoryboard.storyboard */,
 				E21D8FAD16B88BEC00EB5477 /* CardGameViewController.h */,
 				E21D8FAE16B88BEC00EB5477 /* CardGameViewController.m */,
@@ -197,6 +200,7 @@
 				E21D8FA716B88BEC00EB5477 /* Default@2x.png in Resources */,
 				E21D8FA916B88BEC00EB5477 /* Default-568h@2x.png in Resources */,
 				E21D8FAC16B88BEC00EB5477 /* MainStoryboard.storyboard in Resources */,
+				E2C3519B16BEE85D0028212B /* Images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

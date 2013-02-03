@@ -11,19 +11,49 @@
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
-
-@property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
-@property (nonatomic) int flipsCount;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame *game;
-@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+
 @property (weak, nonatomic) IBOutlet UILabel *flipStatusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *flipLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeChanged;
+@property (weak, nonatomic) IBOutlet UISlider *historySlider;
+
+@property (strong,nonatomic) NSMutableArray *history;
 @property (nonatomic) NSUInteger gameMode;
+@property (nonatomic) int flipCount;
 
 @end
 
 @implementation CardGameViewController
+
+- (CardMatchingGame *)game
+{
+    if (!_game)
+        _game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count
+                                                  usingDeck:[[PlayingCardDeck alloc] init]
+                                               matchingMode:self.gameMode];
+    return _game;
+}
+
+- (IBAction)historySliderChanged:(UISlider *)sender
+{
+    int index = (int) [sender value];
+    
+    if (index < 0 || index > self.flipCount - 1)
+        return;
+    
+    self.flipStatusLabel.alpha = (index < self.flipCount - 1) ? 0.3 : 1.0;
+    self.flipStatusLabel.text = [self.history objectAtIndex:index];
+}
+
+- (NSMutableArray *)history
+{
+    if (!_history)
+        _history = [[NSMutableArray alloc] init];
+    return _history;
+}
 
 - (NSUInteger) gameMode
 {
@@ -53,24 +83,21 @@
 - (IBAction)dealNewCards
 {
     self.game = nil;
-    self.flipsCount = 0;
+    self.flipCount = 0;
     self.gameModeChanged.enabled = YES;
     [self updateUI];
-}
-
-- (CardMatchingGame *)game
-{
-    if (!_game)
-        _game = [[CardMatchingGame alloc] initWithCardCount:self.cardButtons.count
-                                                  usingDeck:[[PlayingCardDeck alloc] init]
-                                               matchingMode:self.gameMode];
-    return _game;
 }
 
 
 - (void)setCardButtons:(NSArray *)cardButtons
 {
     _cardButtons = cardButtons;
+    for (UIButton *cardButton in cardButtons) {
+        [cardButton setBackgroundImage:[UIImage imageNamed:@"Images/playingCardBack.png"] forState:UIControlStateNormal];
+        [cardButton setBackgroundImage:[UIImage imageNamed:@"Images/playingCardFrontBorder"] forState:UIControlStateSelected];
+        [cardButton setBackgroundImage:[UIImage imageNamed:@"Images/playingCardFrontBorder"] forState:UIControlStateSelected|UIControlStateDisabled];
+        [cardButton setTitle:@"" forState:UIControlStateNormal];
+    }
     [self updateUI];
 }
 
@@ -78,7 +105,7 @@
 {
     for (UIButton *cardButton in self.cardButtons) {
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected];
+        [cardButton setTitle:card.contents  forState:UIControlStateSelected];
         [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
         cardButton.selected = card.isFaceUp;
         cardButton.enabled = !card.isUnplayable;
@@ -86,22 +113,26 @@
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.flipStatusLabel.text = self.game.flipStatus;
+    
+    [self.historySlider setMinimumValue:0.0];
+    [self.historySlider setMaximumValue:(float) self.flipCount];
 }
 
 - (IBAction)flipCard:(UIButton *)sender
 {
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
-    self.flipsCount++;
+    self.flipCount++;
     self.gameModeChanged.enabled = NO;
-    [self updateUI];
-    // once a card is flipped disable game change mode
     
+    [self.historySlider setValue:(float) self.flipCount];
+    [self.history addObject:self.game.flipStatus];
+    [self updateUI];
 }
 
-- (void) setFlipsCount:(int)flipsCount
+- (void) setFlipCount:(int)flipCount
 {
-    _flipsCount = flipsCount;
-    self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipsCount];
+    _flipCount = flipCount;
+    self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
 }
 
 @end

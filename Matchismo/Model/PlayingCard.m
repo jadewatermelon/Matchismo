@@ -23,7 +23,7 @@
     
     for (int i = 0; i < cards.count; i++) {
         cardA = [cards objectAtIndex:i];
-        for (int j = 1; j < cards.count; j++) {
+        for (int j = i+1; j < cards.count; j++) {
             cardB = [cards objectAtIndex:j];
             if (cardA != cardB) {
                 if ([cardA.suit isEqualToString:cardB.suit]) {

@@ -53,7 +53,7 @@
 - (void)flipCardAtIndex:(NSUInteger)index
 {
     Card *card = [self cardAtIndex:index];
-    self.flipStatus = nil;
+    NSString *status = nil;
     NSMutableArray *cardsToMatch = [[NSMutableArray alloc] init];
     
     if (!card.isUnplayable) {
@@ -69,7 +69,7 @@
                                 matchedCard.unplayable = YES;
                             
                             NSString *matches = [cardsToMatch componentsJoinedByString:@"&"];
-                            self.flipStatus = [NSString stringWithFormat:@"Matched %@ for %d points!", matches, matchScore * MATCH_BONUS];
+                            status = [NSString stringWithFormat:@"Matched %@ for %d points!", matches, matchScore * MATCH_BONUS];
                             
                             self.score += matchScore * MATCH_BONUS;
                         } else {
@@ -78,7 +78,7 @@
                             
                             [cardsToMatch insertObject:card atIndex:0];  // last card flipped up remains up
                             NSString *noMatches = [cardsToMatch componentsJoinedByString:@"&"];
-                            self.flipStatus = [NSString stringWithFormat:@"%@ do not match! %d point penalty", noMatches, MISMATCH_PENALTY];
+                            status = [NSString stringWithFormat:@"%@ do not match! %d point penalty", noMatches, MISMATCH_PENALTY];
 
                             self.score -= MISMATCH_PENALTY;
                         }
@@ -87,100 +87,42 @@
                 }
             }
             self.score -= FLIP_COST;
-            if (!self.flipStatus)
+            if (!status)
                 self.flipStatus = [NSString stringWithFormat:@"Flipped up %@", card.contents];
+            else
+                self.flipStatus = status;
         }
         card.faceUp = !card.faceUp;
-    }    
-}
-
-@end
+    }
 /*
- if (self.matchMode == 0) {
- if (!card.isUnplayable) {
- if (!card.isFaceUp) {
- for (Card *otherCard in self.cards) {
- if (otherCard.isFaceUp && !otherCard.isUnplayable) {
- int matchScore = [card match:@[otherCard]];
- if (matchScore) {
- otherCard.unplayable = YES;
- card.unplayable = YES;
- self.score += matchScore * MATCH_BONUS;
- self.flipStatus = [NSString stringWithFormat:@"Matched %@ & %@ for %d points!", card.contents, otherCard.contents, MATCH_BONUS];
- } else {
- otherCard.faceUp = NO;
- self.score -= MISMATCH_PENALTY;
- self.flipStatus = [NSString stringWithFormat:@"%@ & %@ don't match! %d point penalty!", card.contents, otherCard.contents, MISMATCH_PENALTY];
- }
- break;
- }
- }
- self.score -= FLIP_COST;
- if (!self.flipStatus)
- self.flipStatus = [NSString stringWithFormat:@"Flipped up %@", card.contents];
- }
- card.faceUp = !card.faceUp;
- }
- } else if (self.matchMode == 1) {
- NSMutableArray *otherCards;
- if (!card.isUnplayable) {
- if (!card.isFaceUp) {
- for (Card *otherCard in self.cards) {
- if (otherCard.isFaceUp && !otherCard.isUnplayable)
- [otherCards addObject:otherCard];
- }// possibly no other cards face up; one card is face up; or two cards face up
- // call match if 1 or 2 cards face up and report back otherwise just say what's been flipped up
- // what happens if you send match an empty array? it returns 0 the same as if there were no match... so still need to verify count
- if (otherCards.count == 1) {
- 
- }
- else if (otherCards.count == 2) {
- 
- }
- }
- }
- }*/
+    if (self.isGameOver) {
+        for (Card *crd in self.cards) {
+            crd.unplayable = YES;
+//            crd.faceUp = YES;
+        }
+        self.flipStatus = [self.flipStatus stringByAppendingString:@"No further matches\nGameOver! Please click deal to play again."];
+    }
+*/}
 
-
- /*       Card *otherCardA = nil;
-        if (!card.isUnplayable) {
-            if (!card.isFaceUp) {
-                for (Card *otherCard in self.cards) {
-                    if (!otherCardA && otherCard.isFaceUp && !otherCard.isUnplayable) {
-                        int matchScore = [card match:@[otherCard]];
-                        if (matchScore) {
-                            otherCardA = otherCard;
-                        } else {
-                            otherCard.faceUp = NO;
-                            self.score -= MISMATCH_PENALTY;
-                            self.flipStatus = [NSString stringWithFormat:@"%@ & %@ don't match! %d point penalty!", card.contents, otherCard.contents, MISMATCH_PENALTY];
-                        }
-                    } else if (otherCard.isFaceUp && !otherCard.isUnplayable) {
-                        int matchScore = [card match:@[otherCard, otherCardA]];
-                        if (matchScore) {
-                            otherCard.unplayable = YES;
-                            otherCardA.unplayable = YES;
-                            card.unplayable = YES;
-                            self.score += matchScore * MATCH_BONUS;
-                            self.flipStatus = [NSString stringWithFormat:@"Matched %@ & %@ & %@ for %d points!", card.contents, otherCardA.contents, otherCard.contents, MATCH_BONUS];
-                        } else {
-                            otherCard.faceUp = NO;
-                            otherCardA.faceUp = NO;
-                            self.score -= MISMATCH_PENALTY;
-                            self.flipStatus = [NSString stringWithFormat:@"%@ & %@ & %@ don't match! %d point penalty!", card.contents, otherCardA.contents, otherCard.contents, MISMATCH_PENALTY];
-                        }
-                        break;
-                    }
-                }
-                self.score -= FLIP_COST;
-                if (!self.flipStatus)
-                    self.flipStatus = [NSString stringWithFormat:@"Flipped up %@", card.contents];
-            }
-            card.faceUp = !card.faceUp;
+- (BOOL)isGameOver
+{
+    BOOL gameOver = YES;
+    NSMutableArray *playableCards = [[NSMutableArray alloc] init];
+    
+    for (Card *card in self.cards)
+        if (!card.isUnplayable)
+            [playableCards addObject:card];
+    
+    while ([playableCards count] > 1) {
+        Card *card = [playableCards lastObject];
+        [playableCards removeLastObject];
+        if ([card match:playableCards]) {
+            gameOver = NO;
+            break;
         }
     }
     
+    return gameOver;
 }
 
 @end
-*/
