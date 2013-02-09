@@ -9,7 +9,7 @@
 #import "CardMatchingGame.h"
 
 @interface CardMatchingGame()
-@property (strong, nonatomic) NSMutableArray *cards; // of type Card
+@property (strong, nonatomic) NSMutableArray *cards; // of type Cardq
 @property (nonatomic, readwrite) int score;
 @property (nonatomic, readwrite) NSString *flipStatus;
 @property (nonatomic) NSUInteger numCardsToMatch;
@@ -98,7 +98,7 @@
     if (self.isGameOver) {
         for (Card *crd in self.cards) {
             crd.unplayable = YES;
-//            crd.faceUp = YES;
+            //crd.faceUp = YES;
         }
         self.flipStatus = [self.flipStatus stringByAppendingString:@"No further matches\nGameOver! Please click deal to play again."];
     }
