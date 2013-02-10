@@ -24,6 +24,7 @@
 		E21D8FC116B965DE00EB5477 /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E21D8FC016B965DE00EB5477 /* PlayingCardDeck.m */; };
 		E237F64B16BB608200FB7A52 /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = E237F64A16BB608200FB7A52 /* CardMatchingGame.m */; };
 		E285E39216C8255200E0DAA4 /* SetCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E285E39116C8255200E0DAA4 /* SetCard.m */; };
+		E285E39516C8332F00E0DAA4 /* SetCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E285E39416C8332F00E0DAA4 /* SetCardDeck.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,8 @@
 		E285E38816C6953C00E0DAA4 /* playingCardFrontSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playingCardFrontSimple.png; sourceTree = "<group>"; };
 		E285E39016C8255200E0DAA4 /* SetCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetCard.h; path = Model/SetCard.h; sourceTree = "<group>"; };
 		E285E39116C8255200E0DAA4 /* SetCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetCard.m; path = Model/SetCard.m; sourceTree = "<group>"; };
+		E285E39316C8332E00E0DAA4 /* SetCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetCardDeck.h; path = Model/SetCardDeck.h; sourceTree = "<group>"; };
+		E285E39416C8332F00E0DAA4 /* SetCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetCardDeck.m; path = Model/SetCardDeck.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +152,8 @@
 				E21D8FC016B965DE00EB5477 /* PlayingCardDeck.m */,
 				E285E39016C8255200E0DAA4 /* SetCard.h */,
 				E285E39116C8255200E0DAA4 /* SetCard.m */,
+				E285E39316C8332E00E0DAA4 /* SetCardDeck.h */,
+				E285E39416C8332F00E0DAA4 /* SetCardDeck.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -251,6 +256,7 @@
 				E21D8FC116B965DE00EB5477 /* PlayingCardDeck.m in Sources */,
 				E237F64B16BB608200FB7A52 /* CardMatchingGame.m in Sources */,
 				E285E39216C8255200E0DAA4 /* SetCard.m in Sources */,
+				E285E39516C8332F00E0DAA4 /* SetCardDeck.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
