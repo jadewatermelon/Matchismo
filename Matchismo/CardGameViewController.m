@@ -130,7 +130,7 @@
     [self updateUI];
 }
 
-- (void) setFlipCount:(int)flipCount
+- (void)setFlipCount:(int)flipCount
 {
     _flipCount = flipCount;
     self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];

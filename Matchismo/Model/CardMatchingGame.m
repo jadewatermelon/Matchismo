@@ -69,7 +69,7 @@
                                 matchedCard.unplayable = YES;
                             
                             NSString *matches = [cardsToMatch componentsJoinedByString:@"&"];
-                            status = [NSString stringWithFormat:@"Matched %@ for %d points!", matches, matchScore * MATCH_BONUS];
+                            status = [NSString stringWithFormat:@"Matched %@\nfor %d points!", matches, matchScore * MATCH_BONUS];
                             
                             self.score += matchScore * MATCH_BONUS;
                         } else {
@@ -78,7 +78,7 @@
                             
                             [cardsToMatch insertObject:card atIndex:0];  // last card flipped up remains up
                             NSString *noMatches = [cardsToMatch componentsJoinedByString:@"&"];
-                            status = [NSString stringWithFormat:@"%@ do not match! %d point penalty", noMatches, MISMATCH_PENALTY];
+                            status = [NSString stringWithFormat:@"%@ do not match!\n%d point penalty", noMatches, MISMATCH_PENALTY];
 
                             self.score -= MISMATCH_PENALTY;
                         }
