@@ -58,13 +58,16 @@
         if (card.isFaceUp) {
             self.lastPlay = @"";
         } else {
-            self.lastPlay =[NSString stringWithFormat:@"Flipped up %@", card.contents];;
+            self.lastPlay =[NSString stringWithFormat:@"Flipped up %@", card.contents];
         }
         
         self.score -= FLIP_COST;
         card.faceUp = !card.faceUp;
         
-        if ([self numFaceUpCards] == self.numCardsToMatch) {
+        int numFaceUp = [self numFaceUpCards];
+        card.orderClicked = numFaceUp - 1;
+        
+        if (numFaceUp == self.numCardsToMatch){
             [self matchFaceUpCards];
         }
     }
@@ -82,13 +85,16 @@
 
 - (void)matchFaceUpCards
 {
-    NSMutableArray *cardsToMatch = [[NSMutableArray alloc] init];
-    
+    NSMutableArray *cardsToMatch = [[NSMutableArray alloc] init]; //initWithCapacity:self.numCardsToMatch];
+
     for (Card *card in self.cards) {
         if (card.isFaceUp && !card.isUnplayable) {
-            [cardsToMatch addObject:card];
+            [cardsToMatch addObject:card];                        //insertObject:card atIndex:card.orderClicked];
         }
     }
+    
+    [cardsToMatch sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"orderClicked" ascending:YES]]];
+    
     NSString *matches = [cardsToMatch componentsJoinedByString:@"&"];
     
     Card *card = [cardsToMatch lastObject];
@@ -96,16 +102,22 @@
     
     int matchScore = [card match:cardsToMatch];
     if (matchScore) {
-        for (Card *matchedCard in cardsToMatch)
+        for (Card *matchedCard in cardsToMatch) {
             matchedCard.unplayable = YES;
+            matchedCard.orderClicked = 0;
+        }
         card.unplayable = YES;
+        card.orderClicked = 0;
         
         self.lastPlay = [NSString stringWithFormat:@"Matched %@\nfor %d points!", matches, matchScore * MATCH_BONUS];
         self.score += matchScore * MATCH_BONUS;
     } else {
-        for (Card *unmatchedCard in cardsToMatch)
+        for (Card *unmatchedCard in cardsToMatch) {
             unmatchedCard.faceUp = NO;
-        card.faceUp = NO;
+            unmatchedCard.orderClicked = 0;
+        }            
+//        card.faceUp = NO;
+        card.orderClicked = 0;
 
         self.lastPlay = [NSString stringWithFormat:@"%@ do not match!\n%d point penalty", matches, MISMATCH_PENALTY];
         self.score -= MISMATCH_PENALTY;
