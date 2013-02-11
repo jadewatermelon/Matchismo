@@ -23,6 +23,6 @@
 - (BOOL)isGameOver;
 
 @property (nonatomic, readonly) int score;
-@property (nonatomic, readonly) NSString *flipStatus;
+@property (nonatomic, readonly) NSString *lastPlay;
 
 @end

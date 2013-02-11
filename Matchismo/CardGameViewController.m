@@ -113,7 +113,7 @@
         cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.flipStatusLabel.text = self.game.flipStatus;
+    self.flipStatusLabel.text = self.game.lastPlay;
     
     [self.historySlider setMinimumValue:0.0];
     [self.historySlider setMaximumValue:(float) self.flipCount];
@@ -126,7 +126,7 @@
     self.gameModeChanged.enabled = NO;
     
     [self.historySlider setValue:(float) self.flipCount];
-    [self.history addObject:self.game.flipStatus];
+    [self.history addObject:self.game.lastPlay];
     [self updateUI];
 }
 
