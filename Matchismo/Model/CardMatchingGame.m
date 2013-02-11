@@ -11,7 +11,7 @@
 @interface CardMatchingGame()
 @property (strong, nonatomic) NSMutableArray *cards; // of type Cardq
 @property (nonatomic, readwrite) int score;
-@property (nonatomic, readwrite) NSString *flipStatus;
+@property (nonatomic, readwrite) NSString *lastPlay;
 @property (nonatomic) NSUInteger numCardsToMatch;
 @end
 
@@ -53,6 +53,68 @@
 - (void)flipCardAtIndex:(NSUInteger)index
 {
     Card *card = [self cardAtIndex:index];
+    
+    if (card && !card.isUnplayable) {
+        if (card.isFaceUp) {
+            self.lastPlay = @"";
+        } else {
+            self.lastPlay =[NSString stringWithFormat:@"Flipped up %@", card.contents];;
+        }
+        
+        self.score -= FLIP_COST;
+        card.faceUp = !card.faceUp;
+        
+        if ([self numFaceUpCards] == self.numCardsToMatch) {
+            [self matchFaceUpCards];
+        }
+    }
+}
+
+- (NSUInteger)numFaceUpCards
+{
+    NSUInteger num = 0;
+    for (Card *card in self.cards) {
+        if (card.isFaceUp && !card.isUnplayable)
+            num++;
+    }
+    return num;
+}
+
+- (void)matchFaceUpCards
+{
+    NSMutableArray *cardsToMatch = [[NSMutableArray alloc] init];
+    
+    for (Card *card in self.cards) {
+        if (card.isFaceUp && !card.isUnplayable) {
+            [cardsToMatch addObject:card];
+        }
+    }
+    NSString *matches = [cardsToMatch componentsJoinedByString:@"&"];
+    
+    Card *card = [cardsToMatch lastObject];
+    [cardsToMatch removeObject:card];
+    
+    int matchScore = [card match:cardsToMatch];
+    if (matchScore) {
+        for (Card *matchedCard in cardsToMatch)
+            matchedCard.unplayable = YES;
+        card.unplayable = YES;
+        
+        self.lastPlay = [NSString stringWithFormat:@"Matched %@\nfor %d points!", matches, matchScore * MATCH_BONUS];
+        self.score += matchScore * MATCH_BONUS;
+    } else {
+        for (Card *unmatchedCard in cardsToMatch)
+            unmatchedCard.faceUp = NO;
+        card.faceUp = NO;
+
+        self.lastPlay = [NSString stringWithFormat:@"%@ do not match!\n%d point penalty", matches, MISMATCH_PENALTY];
+        self.score -= MISMATCH_PENALTY;
+    }
+}
+/*  slightly more unweildy method, but prints out the contents in the order clicked
+- (void)flipCardAtIndex:(NSUInteger)index
+{
+    Card *card = [self cardAtIndex:index];
     NSString *status = nil;
     NSMutableArray *cardsToMatch = [[NSMutableArray alloc] init];
     
@@ -88,21 +150,21 @@
             }
             self.score -= FLIP_COST;
             if (!status)
-                self.flipStatus = [NSString stringWithFormat:@"Flipped up %@", card.contents];
+                self.lastPlay = [NSString stringWithFormat:@"Flipped up %@", card.contents];
             else
-                self.flipStatus = status;
+                self.lastPlay = status;
         }
         card.faceUp = !card.faceUp;
     }
-/*
+*//*
     if (self.isGameOver) {
         for (Card *crd in self.cards) {
             crd.unplayable = YES;
             //crd.faceUp = YES;
         }
-        self.flipStatus = [self.flipStatus stringByAppendingString:@"No further matches\nGameOver! Please click deal to play again."];
+        self.lastPlay = [self.lastPlay stringByAppendingString:@"No further matches\nGameOver! Please click deal to play again."];
     }
-*/}
+*/
 
 - (BOOL)isGameOver
 {
