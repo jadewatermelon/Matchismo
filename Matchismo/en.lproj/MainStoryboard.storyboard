@@ -397,9 +397,9 @@
                     <tabBarItem key="tabBarItem" title="Matching" id="sIL-GE-yVt"/>
                     <connections>
                         <outlet property="flipLabel" destination="Oew-Jv-Mqv" id="YsL-pp-0MK"/>
-                        <outlet property="flipStatusLabel" destination="CVe-q2-Uo6" id="yDV-vM-BMx"/>
                         <outlet property="gameModeChanged" destination="iFD-jV-VQz" id="c1m-aD-WzB"/>
                         <outlet property="historySlider" destination="MNb-9S-ots" id="KrN-59-J30"/>
+                        <outlet property="lastPlayLabel" destination="CVe-q2-Uo6" id="CHy-ru-PfD"/>
                         <outlet property="scoreLabel" destination="S14-RU-CFD" id="aHQ-Es-uZU"/>
                         <outletCollection property="cardButtons" destination="5YW-Ku-OEO" id="fdh-LM-N60"/>
                         <outletCollection property="cardButtons" destination="iyO-8h-r9M" id="0Bj-lv-cKm"/>
@@ -458,6 +458,26 @@
             <point key="canvasLocation" x="-1009" y="133"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="CardGameViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="flipCard:" candidateClass="UIButton"/>
+                <relationship kind="action" name="gameModeChanged:" candidateClass="UISegmentedControl"/>
+                <relationship kind="action" name="historySliderChanged:" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="flipLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="flipStatusLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="gameModeChanged" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="historySlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="lastPlayLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="cardButtons" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
