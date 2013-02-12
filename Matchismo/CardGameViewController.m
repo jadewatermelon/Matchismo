@@ -14,7 +14,7 @@
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 
-@property (weak, nonatomic) IBOutlet UILabel *flipStatusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastPlayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeChanged;
@@ -44,8 +44,8 @@
     if (index < 0 || index > self.flipCount - 1)
         return;
     
-    self.flipStatusLabel.alpha = (index < self.flipCount - 1) ? 0.3 : 1.0;
-    self.flipStatusLabel.text = [self.history objectAtIndex:index];
+    self.lastPlayLabel.alpha = (index < self.flipCount - 1) ? 0.3 : 1.0;
+    self.lastPlayLabel.text = [self.history objectAtIndex:index];
 }
 
 - (NSMutableArray *)history
@@ -113,7 +113,8 @@
         cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.flipStatusLabel.text = self.game.lastPlay;
+    self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
+    self.lastPlayLabel.text = self.game.lastPlay;
     
     [self.historySlider setMinimumValue:0.0];
     [self.historySlider setMaximumValue:(float) self.flipCount];
@@ -128,12 +129,6 @@
     [self.historySlider setValue:(float) self.flipCount];
     [self.history addObject:self.game.lastPlay];
     [self updateUI];
-}
-
-- (void)setFlipCount:(int)flipCount
-{
-    _flipCount = flipCount;
-    self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
 }
 
 @end
