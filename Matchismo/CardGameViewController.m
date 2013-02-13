@@ -88,36 +88,26 @@
 {
     for (UIButton *cardButton in self.cardButtons) {
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-//******
-        // no introspection in SUPER CLASS
-        // FIX THIS
-//******
-        if ([card isKindOfClass:[PlayingCard class]]) {
-            [cardButton setBackgroundImage:[UIImage imageNamed:@"Images/playingCardBack.png"]
-                                  forState:UIControlStateNormal];                               // shows card back for playing card
-            [cardButton setBackgroundImage:[UIImage imageNamed:@"Images/playingCardFrontBorder"]
-                                  forState:UIControlStateSelected];                             // shows blank background when card isFaceUp and playable
-            [cardButton setBackgroundImage:[UIImage imageNamed:@"Images/playingCardFrontBorder"]
-                                  forState:UIControlStateSelected|UIControlStateDisabled];      // shows blank background when card isFaceUp and unplayable
-            [cardButton setTitle:@"" forState:UIControlStateNormal];                            // ensures no text is on the playing card back
-        } else if ([card isKindOfClass:[SetCard class]]) {
-            [cardButton setTitle:card.contents forState:UIControlStateNormal];
-        }
-// above here is wrong sauce possibly next two lines as well for setcard think about it
-        
-        [cardButton setTitle:card.contents  forState:UIControlStateSelected];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
-        cardButton.selected = card.isFaceUp;
-        cardButton.enabled = !card.isUnplayable;
-        cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
+        [self updateUIButton:cardButton withCard:card];
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
-    //self.lastPlayLabel.text = [[self.game.moveHistory lastObject] description];
     self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory lastObject]];
     
     [self.historySlider setMinimumValue:0.0];
     [self.historySlider setMaximumValue:(float) [self.game.moveHistory count]];
+}
+
+- (void)updateUIButton:(UIButton *)button withCard:(Card *)card
+{
+    [button setBackgroundImage:nil forState:UIControlStateNormal];      // default is a blank card back
+    [button setAttributedTitle:nil forState:UIControlStateNormal];      // with no text
+    [button setAttributedTitle:[self cardToAttributedString:card] forState:UIControlStateSelected]; // when selected show the contents
+    [button setAttributedTitle:[self cardToAttributedString:card] forState:UIControlStateSelected|UIControlStateDisabled]; // when selected and out of play still show the contents
+    
+    button.alpha = card.isUnplayable ? 0.3 : 1.0;   // make transparent if the card is no longer playable
+    button.selected = card.isFaceUp;
+    button.enabled = !card.isUnplayable;
 }
 
 - (IBAction)flipCard:(UIButton *)sender
