@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Deck.h"
+#import "CardMatchingGameMove.h"
 
 @interface CardMatchingGame : NSObject
 
@@ -23,6 +24,7 @@
 - (BOOL)isGameOver;
 
 @property (nonatomic, readonly) int score;
-@property (nonatomic, readonly) NSString *lastPlay;
+@property (nonatomic, readonly) NSMutableArray *moveHistory; // of type CardMatchingGameMove
+//@property (nonatomic, readonly) NSString *lastPlay;
 
 @end
