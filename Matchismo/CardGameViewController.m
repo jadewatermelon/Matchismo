@@ -40,7 +40,8 @@
         return;
     
     self.lastPlayLabel.alpha = (index < [self.game.moveHistory count] - 1) ? 0.3 : 1.0; 
-    self.lastPlayLabel.text = [[self.game.moveHistory objectAtIndex:index] description];
+//    self.lastPlayLabel.text = [[self.game.moveHistory objectAtIndex:index] description];
+    self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory objectAtIndex:index]];
 }
 /*
 - (NSUInteger) gameMode
@@ -87,6 +88,10 @@
 {
     for (UIButton *cardButton in self.cardButtons) {
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
+//******
+        // no introspection in SUPER CLASS
+        // FIX THIS
+//******
         if ([card isKindOfClass:[PlayingCard class]]) {
             [cardButton setBackgroundImage:[UIImage imageNamed:@"Images/playingCardBack.png"]
                                   forState:UIControlStateNormal];                               // shows card back for playing card
@@ -98,6 +103,8 @@
         } else if ([card isKindOfClass:[SetCard class]]) {
             [cardButton setTitle:card.contents forState:UIControlStateNormal];
         }
+// above here is wrong sauce possibly next two lines as well for setcard think about it
+        
         [cardButton setTitle:card.contents  forState:UIControlStateSelected];
         [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
         cardButton.selected = card.isFaceUp;
@@ -106,10 +113,11 @@
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
-    self.lastPlayLabel.text = [[self.game.moveHistory lastObject] description];
+    //self.lastPlayLabel.text = [[self.game.moveHistory lastObject] description];
+    self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory lastObject]];
     
     [self.historySlider setMinimumValue:0.0];
-    [self.historySlider setMaximumValue:(float) [self.game.moveHistory count]];//self.flipCount];
+    [self.historySlider setMaximumValue:(float) [self.game.moveHistory count]];
 }
 
 - (IBAction)flipCard:(UIButton *)sender
@@ -118,8 +126,47 @@
     self.flipCount++;
 //    self.gameModeChanged.enabled = NO;
     
-    [self.historySlider setValue:(float) [self.game.moveHistory count]];//self.flipCount];
+    [self.historySlider setValue:(float) [self.game.moveHistory count]];
     [self updateUI];
+}
+
+- (NSAttributedString *)cardToAttributedString:(Card *)card
+{
+    return [[NSAttributedString alloc] initWithString:card.contents];
+}
+
+- (NSAttributedString *)moveToAttributedString:(CardMatchingGameMove *)move
+{
+    NSMutableAttributedString *cardsToInsert = [[NSMutableAttributedString alloc] init];
+    NSMutableAttributedString *moveSummary;
+    
+    NSAttributedString *nothing = [[NSAttributedString alloc] initWithString:@""];
+    NSAttributedString *andper = [[NSAttributedString alloc] initWithString:@"&"];
+    
+    for (Card *card in move.cards) {
+        [cardsToInsert appendAttributedString:[self cardToAttributedString:card]];
+        [cardsToInsert appendAttributedString:[card isEqual:[move.cards lastObject]] ? nothing : andper];
+    }
+    
+    if (move.move == MoveTypeFlipDown) {
+        return nothing;
+    } else if (move.move == MoveTypeFlipUp) {
+        moveSummary = [[NSMutableAttributedString alloc] initWithString:@"Flipped up "];
+        [moveSummary appendAttributedString:cardsToInsert];
+    } else if (move.move == MoveTypeMatch) {
+        moveSummary = [[NSMutableAttributedString alloc] initWithString:@"Matched "];
+        [moveSummary appendAttributedString:cardsToInsert];
+        [moveSummary appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\nfor %d points",move.scoreChange]]];
+    } else if (move.move == MoveTypeMismatch) {
+        moveSummary = [[NSMutableAttributedString alloc] initWithAttributedString:cardsToInsert];
+        [moveSummary appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" do not match\n%d point penalty",move.scoreChange]]];
+    }
+    
+    if (moveSummary)
+        return moveSummary;
+    else
+        return nothing;
+
 }
 
 @end
