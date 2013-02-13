@@ -9,10 +9,15 @@
 #import "CardMatchingGame.h"
 
 @interface CardMatchingGame()
-@property (strong, nonatomic) NSMutableArray *cards; // of type Cardq
+@property (strong, nonatomic) NSMutableArray *cards; // of type Card
 @property (nonatomic, readwrite) int score;
-@property (nonatomic, readwrite) NSString *lastPlay;
+@property (nonatomic, readwrite) NSMutableArray *moveHistory; // of type CardMatchingGameMove
+//@property (nonatomic, readwrite) NSString *lastPlay;
 @property (nonatomic) NSUInteger numCardsToMatch;
+@property (strong, nonatomic) NSMutableArray *faceUpCards;
+
+@property (nonatomic) MoveType currentMove;
+@property (nonatomic) int currentScoreChange;
 @end
 
 @implementation CardMatchingGame
@@ -25,6 +30,18 @@
 {
     if (!_cards) _cards = [[NSMutableArray alloc] init];
     return _cards;
+}
+
+- (NSMutableArray *)moveHistory
+{
+    if (!_moveHistory) _moveHistory = [[NSMutableArray alloc] init];
+    return _moveHistory;
+}
+
+- (NSMutableArray *)faceUpCards
+{
+    if (!_faceUpCards) _faceUpCards = [[NSMutableArray alloc] init];
+    return _faceUpCards;
 }
 
 - (id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck matchingMode:(NSUInteger)num
@@ -52,50 +69,74 @@
 
 - (void)flipCardAtIndex:(NSUInteger)index
 {
+    self.currentMove = MoveTypeFlipDown;
+    self.currentScoreChange = 0;
+    
     Card *card = [self cardAtIndex:index];
     
     if (card && !card.isUnplayable) {
-        if (card.isFaceUp) {
+/*        if (card.isFaceUp) {
             self.lastPlay = @"";
         } else {
             self.lastPlay =[NSString stringWithFormat:@"Flipped up %@", card.contents];
         }
-        
-        self.score -= FLIP_COST;
+*/
+        if (!card.isFaceUp) {
+            self.currentMove = MoveTypeFlipUp;
+            self.currentScoreChange -= FLIP_COST;  // self.score -= FLIP_COST;
+        }
+
         card.faceUp = !card.faceUp;
         
         int numFaceUp = [self numFaceUpCards];
         card.orderClicked = numFaceUp - 1;
+        // preserve current state of cards
+        NSArray *currentCardOrder = [[NSArray alloc] initWithArray:self.faceUpCards]; // copyItems:YES];  // want to do a deep copy....
         
         if (numFaceUp == self.numCardsToMatch){
             [self matchFaceUpCards];
         }
+        
+        // if the previous move was a flip down remove it
+        if ([[[self.moveHistory lastObject] description] isEqualToString:@""]) {
+            [self.moveHistory removeLastObject];
+        }
+        
+        CardMatchingGameMove *currentMove = [[CardMatchingGameMove alloc] initWithMoveType:self.currentMove withFlippedCards:currentCardOrder withScoreChange:self.currentScoreChange];
+        [self.moveHistory addObject:currentMove];
+        self.score += self.currentScoreChange;
     }
 }
 
 - (NSUInteger)numFaceUpCards
 {
     NSUInteger num = 0;
+    self.faceUpCards = nil;
     for (Card *card in self.cards) {
-        if (card.isFaceUp && !card.isUnplayable)
+        if (card.isFaceUp && !card.isUnplayable) {
             num++;
+            [self.faceUpCards addObject:card];
+        }
     }
     return num;
 }
 
 - (void)matchFaceUpCards
 {
-    NSMutableArray *cardsToMatch = [[NSMutableArray alloc] init]; //initWithCapacity:self.numCardsToMatch];
+/*    NSMutableArray *cardsToMatch = [[NSMutableArray alloc] init]; //initWithCapacity:self.numCardsToMatch];
 
     for (Card *card in self.cards) {
         if (card.isFaceUp && !card.isUnplayable) {
             [cardsToMatch addObject:card];                        //insertObject:card atIndex:card.orderClicked];
         }
     }
+*/    
+//    [cardsToMatch sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"orderClicked" ascending:YES]]];
     
+//    NSString *matches = [cardsToMatch componentsJoinedByString:@"&"];
+    NSMutableArray *cardsToMatch = [self.faceUpCards mutableCopy ];
     [cardsToMatch sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"orderClicked" ascending:YES]]];
-    
-    NSString *matches = [cardsToMatch componentsJoinedByString:@"&"];
+
     
     Card *card = [cardsToMatch lastObject];
     [cardsToMatch removeObject:card];
@@ -109,18 +150,22 @@
         card.unplayable = YES;
         card.orderClicked = 0;
         
-        self.lastPlay = [NSString stringWithFormat:@"Matched %@\nfor %d points!", matches, matchScore * MATCH_BONUS];
-        self.score += matchScore * MATCH_BONUS;
+//        self.lastPlay = [NSString stringWithFormat:@"Matched %@\nfor %d points!", matches, matchScore * MATCH_BONUS];
+//        self.score += matchScore * MATCH_BONUS;
+        self.currentMove = MoveTypeMatch;
+        self.currentScoreChange += matchScore * MATCH_BONUS;
     } else {
         for (Card *unmatchedCard in cardsToMatch) {
             unmatchedCard.faceUp = NO;
             unmatchedCard.orderClicked = 0;
         }            
-//        card.faceUp = NO;
+        card.faceUp = NO;                     // comment if you want the last card selected to remain faceup
         card.orderClicked = 0;
 
-        self.lastPlay = [NSString stringWithFormat:@"%@ do not match!\n%d point penalty", matches, MISMATCH_PENALTY];
-        self.score -= MISMATCH_PENALTY;
+//        self.lastPlay = [NSString stringWithFormat:@"%@ do not match!\n%d point penalty", matches, MISMATCH_PENALTY];
+//        self.score -= MISMATCH_PENALTY;
+        self.currentMove = MoveTypeMismatch;
+        self.currentScoreChange -= MISMATCH_PENALTY;
     }
 }
 /*  slightly more unweildy method, but prints out the contents in the order clicked

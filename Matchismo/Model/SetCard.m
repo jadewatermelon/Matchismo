@@ -31,8 +31,11 @@
             }
         }
         for (id feature in features) {
-            if ([features countForObject:feature] == 2)
+            // if any feature is present twice then there is no set
+            if ([features countForObject:feature] == 2) {
                 score = 0;
+                break;
+            }
             else
                 score = MATCHSCORE;
         }
