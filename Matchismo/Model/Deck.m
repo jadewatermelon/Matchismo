@@ -17,11 +17,8 @@
 @implementation Deck
 
 - (NSMutableArray *) cards
-{
-    if (!_cards)
-        _cards = [[NSMutableArray alloc] init];
-        // lazy instantiation - waiting to create the array until someone absolutely needs it
-    
+{   // lazy instantiation - waiting to create the array until someone absolutely needs it
+    if (!_cards) _cards = [[NSMutableArray alloc] init];
     return _cards;
 }
 

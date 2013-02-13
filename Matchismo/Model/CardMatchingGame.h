@@ -21,10 +21,7 @@
 
 - (Card *)cardAtIndex:(NSUInteger)index;
 
-- (BOOL)isGameOver;
-
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) NSMutableArray *moveHistory; // of type CardMatchingGameMove
-//@property (nonatomic, readonly) NSString *lastPlay;
 
 @end

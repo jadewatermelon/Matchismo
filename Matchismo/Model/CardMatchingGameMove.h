@@ -6,6 +6,13 @@
 //  Copyright (c) 2013 Tom Billings. All rights reserved.
 //
 
+// Stores the current state of a CardMatchingGame by recording an
+// array of cards along with the move type and the amount the score
+// changed.
+
+// the cards array should be sorted based on orderClicked parameter
+// prior to storage to ensure that order is preserved for printing back
+
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, MoveType) {

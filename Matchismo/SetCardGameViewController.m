@@ -29,22 +29,26 @@
 - (NSAttributedString *)cardToAttributedString:(Card *)card
 {
     NSMutableAttributedString *converted;
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithDictionary:@{NSParagraphStyleAttributeName : paragraphStyle}];    
     if ([card isKindOfClass:[SetCard class]]) {
         SetCard *setCard = (SetCard *)card;
         // build up attributes
-        NSMutableDictionary *attributes;
         UIColor *color;
         
         if ([setCard.color isEqualToString:@"red"]) {
             color = [UIColor redColor];
-            attributes = [[NSMutableDictionary alloc] initWithDictionary:@{NSStrokeColorAttributeName : color}];
         } else if ([setCard.color isEqualToString:@"green"]) {
             color = [UIColor greenColor];
-            attributes = [[NSMutableDictionary alloc] initWithDictionary:@{NSStrokeColorAttributeName : color}];
         } else if ([setCard.color isEqualToString:@"purple"]) {
             color = [UIColor purpleColor];
-            attributes = [[NSMutableDictionary alloc] initWithDictionary:@{NSStrokeColorAttributeName : color}];
         }
+        
+        [attributes addEntriesFromDictionary:@{NSStrokeColorAttributeName : color}];
+        
         // all get a strokewidth
         [attributes addEntriesFromDictionary:@{NSStrokeWidthAttributeName : @-5}];
         
@@ -55,13 +59,15 @@
         } else if ([setCard.shading isEqualToString:@"open"]) {
             [attributes addEntriesFromDictionary:@{NSForegroundColorAttributeName : [color colorWithAlphaComponent:0.0]}];
         }
+        
+        // initializes converted with however many symbols the card has
         NSString *symbols = [[NSString stringWithFormat:@"%@",setCard.symbol]
                           stringByPaddingToLength:setCard.number
                           withString:[NSString stringWithFormat:@"%@",setCard.symbol]
                           startingAtIndex:0];
-        converted = [[NSMutableAttributedString alloc] initWithString:symbols attributes:attributes];  // initializes converted with however many symbols the card has
+        converted = [[NSMutableAttributedString alloc] initWithString:symbols attributes:attributes];  
     }
-    return converted ? converted : [[NSMutableAttributedString alloc] initWithString:@""];
+    return converted ? converted : [[NSMutableAttributedString alloc] initWithString:@"" attributes:attributes];
 }
 
 - (void)updateUIButton:(UIButton *)button withCard:(Card *)card
@@ -69,9 +75,9 @@
     if ([card isKindOfClass:[SetCard class]]) {
         [button setAttributedTitle:[self cardToAttributedString:card] forState:UIControlStateNormal];
         if (card.isFaceUp && !card.isUnplayable) {
-            [button setBackgroundColor:[UIColor grayColor]];
+            [button setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.7 alpha:0.3]];
         } else {
-            [button setBackgroundColor:[UIColor whiteColor]];
+            [button setBackgroundColor:nil];
         }
         
         button.alpha = card.isUnplayable ? 0.0 : 1.0;   // make transparent if the card is no longer playable
