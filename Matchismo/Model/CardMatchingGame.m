@@ -91,6 +91,7 @@
         int numFaceUp = [self numFaceUpCards];
         card.orderClicked = numFaceUp - 1;
         // preserve current state of cards
+        [self.faceUpCards sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"orderClicked" ascending:YES]]];
         NSArray *currentCardOrder = [[NSArray alloc] initWithArray:self.faceUpCards]; // copyItems:YES];  // want to do a deep copy....
         
         if (numFaceUp == self.numCardsToMatch){
@@ -135,8 +136,6 @@
     
 //    NSString *matches = [cardsToMatch componentsJoinedByString:@"&"];
     NSMutableArray *cardsToMatch = [self.faceUpCards mutableCopy ];
-    [cardsToMatch sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"orderClicked" ascending:YES]]];
-
     
     Card *card = [cardsToMatch lastObject];
     [cardsToMatch removeObject:card];
