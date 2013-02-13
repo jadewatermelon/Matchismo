@@ -28,8 +28,6 @@
 - (NSString *)description
 {
     NSString * descriptions = @"";
-//    NSMutableArray *cardDescriptions = [self.cards mutableCopy];
-//    [cardDescriptions sortUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:@"orderClicked" ascending:YES]]];  // doesn't work the way i think it should because it's not a deep copy... so the orderClicked field is getting reset based on code in CardMatchingGame
     NSString *cardStrings = [self.cards componentsJoinedByString:@"&"];
     
     if (self.move == MoveTypeFlipDown) {

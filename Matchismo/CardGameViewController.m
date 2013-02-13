@@ -19,8 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeChanged;
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
-
-//@property (nonatomic) NSUInteger gameMode;
 @property (nonatomic) int flipCount;
 
 @end
@@ -39,41 +37,14 @@
     if (index < 0 || index > [self.game.moveHistory count] - 1)
         return;
     
-    self.lastPlayLabel.alpha = (index < [self.game.moveHistory count] - 1) ? 0.3 : 1.0; 
-//    self.lastPlayLabel.text = [[self.game.moveHistory objectAtIndex:index] description];
+    self.lastPlayLabel.alpha = (index < [self.game.moveHistory count] - 1) ? 0.3 : 1.0;
     self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory objectAtIndex:index]];
 }
-/*
-- (NSUInteger) gameMode
-{
-    if (!_gameMode || _gameMode < 2)
-        _gameMode = 2;
-    return _gameMode;
-}
-
-
-- (IBAction)gameModeChanged:(UISegmentedControl *)sender
-{
-    switch ([sender selectedSegmentIndex]) {
-        case 0:
-            self.gameMode = 2;
-            break;
-        case 1:
-            self.gameMode = 3;
-            break;
-        default:
-            self.gameMode = 2;
-            break;
-    }
-    [self dealNewCards];
-}
-*/
 
 - (IBAction)dealNewCards
 {
     self.game = nil;
     self.flipCount = 0;
-//    self.gameModeChanged.enabled = YES;
     [self updateUI];
 }
 
@@ -113,8 +84,10 @@
 - (IBAction)flipCard:(UIButton *)sender
 {
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
-    self.flipCount++;
-//    self.gameModeChanged.enabled = NO;
+    
+    // only update flipCount if you are flipping up
+    if (!sender.selected)
+        self.flipCount++;
     
     [self.historySlider setValue:(float) [self.game.moveHistory count]];
     [self updateUI];
@@ -152,11 +125,18 @@
         [moveSummary appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" do not match\n%d point penalty",move.scoreChange]]];
     }
     
-    if (moveSummary)
+    if (moveSummary) {
+        // add center paragraph style and font for entire attributedstring
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        UIFont *fontStyle = [UIFont systemFontOfSize:14];
+        
+        [moveSummary addAttributes:@{NSParagraphStyleAttributeName : paragraphStyle, NSFontAttributeName : fontStyle}
+                             range:NSMakeRange(0,[moveSummary length])];
         return moveSummary;
+    }
     else
         return nothing;
-
 }
 
 @end
