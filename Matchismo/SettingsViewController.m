@@ -17,8 +17,7 @@
 
 - (IBAction)clearScores
 {
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:ALL_RESULTS_KEY];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [CardMatchingGameResults resetGameResults];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

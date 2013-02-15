@@ -10,9 +10,8 @@
 
 @interface CardMatchingGameResults : NSObject
 
-#define ALL_RESULTS_KEY @"CardMatchingGameResults_ALL"
-
 + (NSArray *)allGameResults;
++ (void)resetGameResults;
 - (id)initWithGameType:(NSString *)gameType;        // designated initializer
 
 @property (nonatomic,readonly) NSDate *start;
