@@ -16,12 +16,18 @@
 @implementation PlayingCardGameViewController
 @synthesize game = _game;
 
+- (NSString *)gameType
+{
+    return @"Matching";
+}
+
 - (CardMatchingGame *)game
 {
     if (!_game)
         _game = [[CardMatchingGame alloc] initWithCardCount:[super numPlayableCards]
                                                   usingDeck:[[PlayingCardDeck alloc] init]
-                                               matchingMode:2];
+                                               matchingMode:2
+                                                    gameType:self.gameType];
     return _game;
 }
 

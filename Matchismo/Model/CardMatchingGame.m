@@ -13,6 +13,7 @@
 @property (nonatomic, readwrite) int score;
 @property (nonatomic, readwrite) NSMutableArray *moveHistory; // of type CardMatchingGameMove
 @property (nonatomic) NSUInteger numCardsToMatch;
+@property (nonatomic) NSString* gameType;
 @property (strong, nonatomic) NSMutableArray *faceUpCards;
 
 @property (nonatomic) MoveType currentMove;
@@ -43,7 +44,17 @@
     return _faceUpCards;
 }
 
-- (id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck matchingMode:(NSUInteger)num
+- (CardMatchingGameResults *)results
+{
+    if (!_results)
+        _results = [[CardMatchingGameResults alloc] initWithGameType:self.gameType];
+    return _results;
+}
+
+- (id)initWithCardCount:(NSUInteger)count
+              usingDeck:(Deck *)deck
+           matchingMode:(NSUInteger)num
+               gameType:(NSString *)type
 {
     self = [super init];
     
@@ -57,6 +68,7 @@
             }
         }
         self.numCardsToMatch = num;
+        self.gameType = type;
     }
     return self;
 }
@@ -99,6 +111,8 @@
         CardMatchingGameMove *currentMove = [[CardMatchingGameMove alloc] initWithMoveType:self.currentMove withFlippedCards:currentCardOrder withScoreChange:self.currentScoreChange];
         [self.moveHistory addObject:currentMove];
         self.score += self.currentScoreChange;
+        // update game results for every flip
+        self.results.score = self.score;
     }
 }
 

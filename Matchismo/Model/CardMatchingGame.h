@@ -9,13 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "Deck.h"
 #import "CardMatchingGameMove.h"
+#import "CardMatchingGameResults.h"
 
 @interface CardMatchingGame : NSObject
 
 // Designated initializer
 - (id)initWithCardCount:(NSUInteger)count
               usingDeck:(Deck *)deck
-           matchingMode:(NSUInteger)num;
+           matchingMode:(NSUInteger)num
+               gameType:(NSString *)type;
 
 - (void)flipCardAtIndex:(NSUInteger)index;
 
@@ -23,5 +25,6 @@
 
 @property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) NSMutableArray *moveHistory; // of type CardMatchingGameMove
+@property (nonatomic) CardMatchingGameResults *results;
 
 @end

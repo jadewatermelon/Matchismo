@@ -17,13 +17,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *lastPlayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeChanged;
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @property (nonatomic) int flipCount;
 
 @end
 
 @implementation CardGameViewController
+
+- (NSString *)gameType
+{
+    return @"Unknown";
+}
 
 - (NSUInteger)numPlayableCards
 {
