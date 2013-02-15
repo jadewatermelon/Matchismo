@@ -10,6 +10,8 @@
 
 @interface CardMatchingGameResults : NSObject
 
+#define ALL_RESULTS_KEY @"CardMatchingGameResults_ALL"
+
 + (NSArray *)allGameResults;
 - (id)initWithGameType:(NSString *)gameType;        // designated initializer
 
