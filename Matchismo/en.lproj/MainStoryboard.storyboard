@@ -419,7 +419,7 @@
                             <constraint firstItem="wCZ-8R-lgx" firstAttribute="top" secondItem="goe-03-SzX" secondAttribute="top" type="default" id="yCe-fV-eGP"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Matching" id="sIL-GE-yVt"/>
+                    <tabBarItem key="tabBarItem" title="Matching" image="matching.png" id="sIL-GE-yVt"/>
                     <connections>
                         <outlet property="flipLabel" destination="Oew-Jv-Mqv" id="YsL-pp-0MK"/>
                         <outlet property="historySlider" destination="MNb-9S-ots" id="KrN-59-J30"/>
@@ -1024,7 +1024,7 @@
                             <constraint firstItem="JLT-mu-VBo" firstAttribute="leading" secondItem="TMa-NP-a1d" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="zbQ-5J-MFg"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Set" id="nud-LQ-AiS"/>
+                    <tabBarItem key="tabBarItem" title="Set" image="set.png" id="nud-LQ-AiS"/>
                     <connections>
                         <outlet property="flipLabel" destination="JLT-mu-VBo" id="Grg-rT-ewE"/>
                         <outlet property="historySlider" destination="v9x-Y6-RAk" id="GaS-7L-f2O"/>
@@ -1088,7 +1088,7 @@
                             <constraint firstItem="EQv-c6-NqO" firstAttribute="centerY" secondItem="eXi-ri-L7q" secondAttribute="centerY" type="default" id="sp3-BH-img"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settings" id="Qlf-8Y-lCB"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings.png" id="Qlf-8Y-lCB"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0qr-Th-3sF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1167,7 +1167,7 @@
                             <constraint firstItem="phX-GO-Ak4" firstAttribute="top" secondItem="lM9-St-5oR" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="yYx-ZW-7l5"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Scores" id="VmW-qQ-54r"/>
+                    <tabBarItem key="tabBarItem" title="Scores" image="scores.png" id="VmW-qQ-54r"/>
                     <connections>
                         <outlet property="display" destination="lM9-St-5oR" id="WET-ne-AHc"/>
                     </connections>
@@ -1198,6 +1198,42 @@
             <point key="canvasLocation" x="-1567" y="-104"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="matching.png" width="30" height="30"/>
+        <image name="scores.png" width="30" height="30"/>
+        <image name="set.png" width="30" height="30"/>
+        <image name="settings.png" width="30" height="30"/>
+    </resources>
+    <classes>
+        <class className="CardGameViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="flipLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="historySlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="lastPlayLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="cardButtons" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="GameResultsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameResultsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="display" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PlayingCardGameViewController" superclassName="CardGameViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardGameViewController.h"/>
+        </class>
+        <class className="SetCardGameViewController" superclassName="CardGameViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetCardGameViewController.h"/>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
