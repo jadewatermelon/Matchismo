@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) CardMatchingGame *game;
 - (NSUInteger)numPlayableCards;
+- (NSString *)gameType;
 
 @end

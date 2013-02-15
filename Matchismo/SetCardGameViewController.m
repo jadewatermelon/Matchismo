@@ -17,12 +17,18 @@
 
 @synthesize game = _game;
 
+- (NSString *)gameType
+{
+    return @"Set";
+}
+
 - (CardMatchingGame *)game
 {
     if (!_game)
         _game = [[CardMatchingGame alloc] initWithCardCount:[super numPlayableCards]
                                                   usingDeck:[[SetCardDeck alloc] init]
-                                               matchingMode:3];
+                                               matchingMode:3
+                                                   gameType:self.gameType];
     return _game;
 }
 
