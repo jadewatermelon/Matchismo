@@ -18,7 +18,7 @@
 
 @implementation CardMatchingGameResults
 
-
+#define ALL_RESULTS_KEY @"CardMatchingGameResults_ALL"
 #define START_KEY @"StartDate"
 #define END_KEY @"EndDate"
 #define SCORE_KEY @"Score"
@@ -34,6 +34,12 @@
     }
     
     return gameResults;
+}
+
++ (void)resetGameResults
+{
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:ALL_RESULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSComparisonResult)dateCompare:(CardMatchingGameResults *)gameResult
@@ -85,7 +91,7 @@
     }
     return self;
 }
-
+// convenience initializer
 - (id)initFromPropertyList:(id)plist
 {
     self = [self initWithGameType:@"Unknown"];
