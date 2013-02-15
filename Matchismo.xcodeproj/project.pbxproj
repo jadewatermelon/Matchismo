@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E2075D3016CE784F00908A06 /* CardMatchingGameResults.m in Sources */ = {isa = PBXBuildFile; fileRef = E2075D2F16CE784F00908A06 /* CardMatchingGameResults.m */; };
 		E2075D3316CE878800908A06 /* GameResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2075D3216CE878800908A06 /* GameResultsViewController.m */; };
+		E2075D3616CE9D3500908A06 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2075D3516CE9D3400908A06 /* SettingsViewController.m */; };
 		E21D8F9316B88BEC00EB5477 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E21D8F9216B88BEC00EB5477 /* UIKit.framework */; };
 		E21D8F9516B88BEC00EB5477 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E21D8F9416B88BEC00EB5477 /* Foundation.framework */; };
 		E21D8F9716B88BEC00EB5477 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E21D8F9616B88BEC00EB5477 /* CoreGraphics.framework */; };
@@ -37,6 +38,8 @@
 		E2075D2F16CE784F00908A06 /* CardMatchingGameResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardMatchingGameResults.m; path = Model/CardMatchingGameResults.m; sourceTree = "<group>"; };
 		E2075D3116CE878800908A06 /* GameResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameResultsViewController.h; sourceTree = "<group>"; };
 		E2075D3216CE878800908A06 /* GameResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultsViewController.m; sourceTree = "<group>"; };
+		E2075D3416CE9D3400908A06 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		E2075D3516CE9D3400908A06 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		E21D8F8E16B88BEC00EB5477 /* Matchismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21D8F9216B88BEC00EB5477 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E21D8F9416B88BEC00EB5477 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -135,6 +138,8 @@
 				E285E39D16CA7E2D00E0DAA4 /* SetCardGameViewController.m */,
 				E2075D3116CE878800908A06 /* GameResultsViewController.h */,
 				E2075D3216CE878800908A06 /* GameResultsViewController.m */,
+				E2075D3416CE9D3400908A06 /* SettingsViewController.h */,
+				E2075D3516CE9D3400908A06 /* SettingsViewController.m */,
 				E21D8FB816B88DBE00EB5477 /* Model */,
 				E21D8F9916B88BEC00EB5477 /* Supporting Files */,
 			);
@@ -287,6 +292,7 @@
 				E285E3A416CB045800E0DAA4 /* CardMatchingGameMove.m in Sources */,
 				E2075D3016CE784F00908A06 /* CardMatchingGameResults.m in Sources */,
 				E2075D3316CE878800908A06 /* GameResultsViewController.m in Sources */,
+				E2075D3616CE9D3500908A06 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

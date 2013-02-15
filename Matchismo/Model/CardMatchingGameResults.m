@@ -18,7 +18,7 @@
 
 @implementation CardMatchingGameResults
 
-#define ALL_RESULTS_KEY @"CardMatchingGameResults_ALL"
+
 #define START_KEY @"StartDate"
 #define END_KEY @"EndDate"
 #define SCORE_KEY @"Score"
