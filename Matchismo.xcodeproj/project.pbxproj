@@ -10,6 +10,14 @@
 		E2075D3016CE784F00908A06 /* CardMatchingGameResults.m in Sources */ = {isa = PBXBuildFile; fileRef = E2075D2F16CE784F00908A06 /* CardMatchingGameResults.m */; };
 		E2075D3316CE878800908A06 /* GameResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2075D3216CE878800908A06 /* GameResultsViewController.m */; };
 		E2075D3616CE9D3500908A06 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2075D3516CE9D3400908A06 /* SettingsViewController.m */; };
+		E2075D3C16CEA23400908A06 /* matching.png in Resources */ = {isa = PBXBuildFile; fileRef = E2075D3816CEA23400908A06 /* matching.png */; };
+		E2075D3D16CEA23400908A06 /* matching@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E2075D3916CEA23400908A06 /* matching@2x.png */; };
+		E2075D3E16CEA23400908A06 /* set.png in Resources */ = {isa = PBXBuildFile; fileRef = E2075D3A16CEA23400908A06 /* set.png */; };
+		E2075D3F16CEA23400908A06 /* set@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E2075D3B16CEA23400908A06 /* set@2x.png */; };
+		E2075D4416CEA93100908A06 /* scores.png in Resources */ = {isa = PBXBuildFile; fileRef = E2075D4016CEA93000908A06 /* scores.png */; };
+		E2075D4516CEA93100908A06 /* scores@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E2075D4116CEA93000908A06 /* scores@2x.png */; };
+		E2075D4616CEA93100908A06 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E2075D4216CEA93000908A06 /* settings.png */; };
+		E2075D4716CEA93100908A06 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E2075D4316CEA93000908A06 /* settings@2x.png */; };
 		E21D8F9316B88BEC00EB5477 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E21D8F9216B88BEC00EB5477 /* UIKit.framework */; };
 		E21D8F9516B88BEC00EB5477 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E21D8F9416B88BEC00EB5477 /* Foundation.framework */; };
 		E21D8F9716B88BEC00EB5477 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E21D8F9616B88BEC00EB5477 /* CoreGraphics.framework */; };
@@ -40,6 +48,14 @@
 		E2075D3216CE878800908A06 /* GameResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultsViewController.m; sourceTree = "<group>"; };
 		E2075D3416CE9D3400908A06 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		E2075D3516CE9D3400908A06 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		E2075D3816CEA23400908A06 /* matching.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = matching.png; sourceTree = "<group>"; };
+		E2075D3916CEA23400908A06 /* matching@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "matching@2x.png"; sourceTree = "<group>"; };
+		E2075D3A16CEA23400908A06 /* set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set.png; sourceTree = "<group>"; };
+		E2075D3B16CEA23400908A06 /* set@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "set@2x.png"; sourceTree = "<group>"; };
+		E2075D4016CEA93000908A06 /* scores.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scores.png; sourceTree = "<group>"; };
+		E2075D4116CEA93000908A06 /* scores@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scores@2x.png"; sourceTree = "<group>"; };
+		E2075D4216CEA93000908A06 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		E2075D4316CEA93000908A06 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
 		E21D8F8E16B88BEC00EB5477 /* Matchismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21D8F9216B88BEC00EB5477 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E21D8F9416B88BEC00EB5477 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -99,6 +115,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E2075D3716CEA23400908A06 /* TabBarIcons */ = {
+			isa = PBXGroup;
+			children = (
+				E2075D3816CEA23400908A06 /* matching.png */,
+				E2075D3916CEA23400908A06 /* matching@2x.png */,
+				E2075D4016CEA93000908A06 /* scores.png */,
+				E2075D4116CEA93000908A06 /* scores@2x.png */,
+				E2075D3A16CEA23400908A06 /* set.png */,
+				E2075D3B16CEA23400908A06 /* set@2x.png */,
+				E2075D4216CEA93000908A06 /* settings.png */,
+				E2075D4316CEA93000908A06 /* settings@2x.png */,
+			);
+			path = TabBarIcons;
+			sourceTree = "<group>";
+		};
 		E21D8F8316B88BEC00EB5477 = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +222,7 @@
 		E285E38016C6953C00E0DAA4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E2075D3716CEA23400908A06 /* TabBarIcons */,
 				E285E38116C6953C00E0DAA4 /* Original */,
 				E285E38616C6953C00E0DAA4 /* playingCardBack.png */,
 				E285E38716C6953C00E0DAA4 /* playingCardFrontBorder.png */,
@@ -267,6 +299,14 @@
 				E21D8FA716B88BEC00EB5477 /* Default@2x.png in Resources */,
 				E21D8FA916B88BEC00EB5477 /* Default-568h@2x.png in Resources */,
 				E21D8FAC16B88BEC00EB5477 /* MainStoryboard.storyboard in Resources */,
+				E2075D3C16CEA23400908A06 /* matching.png in Resources */,
+				E2075D3D16CEA23400908A06 /* matching@2x.png in Resources */,
+				E2075D3E16CEA23400908A06 /* set.png in Resources */,
+				E2075D3F16CEA23400908A06 /* set@2x.png in Resources */,
+				E2075D4416CEA93100908A06 /* scores.png in Resources */,
+				E2075D4516CEA93100908A06 /* scores@2x.png in Resources */,
+				E2075D4616CEA93100908A06 /* settings.png in Resources */,
+				E2075D4716CEA93100908A06 /* settings@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
