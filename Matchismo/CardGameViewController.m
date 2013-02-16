@@ -7,12 +7,12 @@
 //
 
 #import "CardGameViewController.h"
-#import "PlayingCard.h"
-#import "SetCard.h"
+#import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (strong, nonatomic) CardMatchingGame *game;
 
 @property (weak, nonatomic) IBOutlet UILabel *lastPlayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
@@ -23,6 +23,22 @@
 @end
 
 @implementation CardGameViewController
+
+- (CardMatchingGame *)game
+{
+    if (!_game)
+        _game = [[CardMatchingGame alloc] initWithCardCount:self.numPlayableCards // change to self.startingCardCount
+                                                  usingDeck:[self createDeck]
+                                               matchingMode:self.matchingMode
+                                                   gameType:self.gameType];
+    return _game;
+}
+
+// abstract
+- (Deck *)createDeck
+{
+    return nil;
+}
 
 - (NSString *)gameType
 {
@@ -52,7 +68,6 @@
     [self updateUI];
 }
 
-
 - (void)setCardButtons:(NSArray *)cardButtons
 {
     _cardButtons = cardButtons;
@@ -75,14 +90,7 @@
 
 - (void)updateUIButton:(UIButton *)button withCard:(Card *)card
 {
-    [button setBackgroundImage:nil forState:UIControlStateNormal];      // default is a blank card back
-    [button setAttributedTitle:nil forState:UIControlStateNormal];      // with no text
-    [button setAttributedTitle:[self cardToAttributedString:card] forState:UIControlStateSelected]; // when selected show the contents
-    [button setAttributedTitle:[self cardToAttributedString:card] forState:UIControlStateSelected|UIControlStateDisabled]; // when selected and out of play still show the contents
-    
-    button.alpha = card.isUnplayable ? 0.3 : 1.0;   // make transparent if the card is no longer playable
-    button.selected = card.isFaceUp;
-    button.enabled = !card.isUnplayable;
+    // abstract
 }
 
 - (IBAction)flipCard:(UIButton *)sender
@@ -99,7 +107,7 @@
 
 - (NSAttributedString *)cardToAttributedString:(Card *)card
 {
-    return [[NSAttributedString alloc] initWithString:card.contents];
+    return nil;
 }
 
 - (NSAttributedString *)moveToAttributedString:(CardMatchingGameMove *)move

@@ -7,6 +7,7 @@
 //
 
 #import "SetCardGameViewController.h"
+#import "SetCardDeck.h"
 #import "SetCard.h"
 
 @interface SetCardGameViewController ()
@@ -15,21 +16,19 @@
 
 @implementation SetCardGameViewController
 
-@synthesize game = _game;
-
 - (NSString *)gameType
 {
     return @"Set";
 }
 
-- (CardMatchingGame *)game
+- (Deck *)createDeck
 {
-    if (!_game)
-        _game = [[CardMatchingGame alloc] initWithCardCount:[super numPlayableCards]
-                                                  usingDeck:[[SetCardDeck alloc] init]
-                                               matchingMode:3
-                                                   gameType:self.gameType];
-    return _game;
+    return [[SetCardDeck alloc] init];
+}
+
+- (NSUInteger)matchingMode
+{
+    return 3;
 }
 
 - (NSAttributedString *)cardToAttributedString:(Card *)card
@@ -90,27 +89,6 @@
         button.selected = card.isFaceUp;
         button.enabled = !card.isUnplayable;
     }
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
