@@ -8,27 +8,27 @@
 
 #import "PlayingCardGameViewController.h"
 #import "PlayingCard.h"
+#import "PlayingCardDeck.h"
 
 
 @interface PlayingCardGameViewController ()
 @end
 
 @implementation PlayingCardGameViewController
-@synthesize game = _game;
 
 - (NSString *)gameType
 {
     return @"Matching";
 }
 
-- (CardMatchingGame *)game
+- (Deck *)createDeck
 {
-    if (!_game)
-        _game = [[CardMatchingGame alloc] initWithCardCount:[super numPlayableCards]
-                                                  usingDeck:[[PlayingCardDeck alloc] init]
-                                               matchingMode:2
-                                                    gameType:self.gameType];
-    return _game;
+    return [[PlayingCardDeck alloc] init];
+}
+
+- (NSUInteger)matchingMode
+{
+    return 2;
 }
 
 - (NSAttributedString *)cardToAttributedString:(Card *)card
@@ -55,27 +55,6 @@
         button.selected = card.isFaceUp;
         button.enabled = !card.isUnplayable;
     }
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

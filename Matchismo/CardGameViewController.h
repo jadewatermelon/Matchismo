@@ -7,12 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CardMatchingGame.h"
+#import "Deck.h"
 
 @interface CardGameViewController : UIViewController
 
-@property (strong, nonatomic) CardMatchingGame *game;
 - (NSUInteger)numPlayableCards;
 - (NSString *)gameType;
+
+// abstract methods and properties
+- (Deck *)createDeck;
+- (void)updateUIButton:(UIButton *)button withCard:(Card *)card;
+- (NSAttributedString *)cardToAttributedString:(Card *)card;
+@property (nonatomic) NSUInteger startingCardCount;
+@property (nonatomic) NSUInteger matchingMode;
 
 @end
