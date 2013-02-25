@@ -44,12 +44,19 @@
         // build up attributes
         UIColor *color;
         
-        if ([setCard.color isEqualToString:@"red"]) {
-            color = [UIColor redColor];
-        } else if ([setCard.color isEqualToString:@"green"]) {
-            color = [UIColor greenColor];
-        } else if ([setCard.color isEqualToString:@"purple"]) {
-            color = [UIColor purpleColor];
+        switch(setCard.color) {
+            case 1: //red
+                color = [UIColor colorWithRed:1.00 green:0.10 blue:0.07 alpha:1.00];
+                break;
+            case 2: // green
+                color = [UIColor colorWithRed:0.00 green:0.84 blue:0.32 alpha:1.00];
+                break;
+            case 3: // purple
+                color = [UIColor colorWithRed:0.42 green:0.15 blue:0.79 alpha:1.00];
+                break;
+            default: // problem if we are ever here
+                color = [UIColor blackColor];
+                break;
         }
         
         [attributes addEntriesFromDictionary:@{NSStrokeColorAttributeName : color}];
@@ -57,18 +64,42 @@
         // all get a strokewidth
         [attributes addEntriesFromDictionary:@{NSStrokeWidthAttributeName : @-5}];
         
-        if ([setCard.shading isEqualToString:@"solid"]) {
-            [attributes addEntriesFromDictionary:@{NSForegroundColorAttributeName : [color colorWithAlphaComponent:1.0]}];
-        } else if ([setCard.shading isEqualToString:@"striped"]) {
-            [attributes addEntriesFromDictionary:@{NSForegroundColorAttributeName : [color colorWithAlphaComponent:0.3]}];
-        } else if ([setCard.shading isEqualToString:@"open"]) {
-            [attributes addEntriesFromDictionary:@{NSForegroundColorAttributeName : [color colorWithAlphaComponent:0.0]}];
+        switch(setCard.shading) {
+            case 1: // open
+                [attributes addEntriesFromDictionary:@{NSForegroundColorAttributeName : [color colorWithAlphaComponent:0.0]}];
+                break;
+            case 2: // striped
+                [attributes addEntriesFromDictionary:@{NSForegroundColorAttributeName : [color colorWithAlphaComponent:0.3]}];
+                break;
+            case 3: // solid
+                [attributes addEntriesFromDictionary:@{NSForegroundColorAttributeName : [color colorWithAlphaComponent:1.0]}];
+                break;
+            default: // should never get half filled
+                [attributes addEntriesFromDictionary:@{NSForegroundColorAttributeName : [color colorWithAlphaComponent:0.5]}];
+                break;
+        }
+        
+        NSString *symbol;
+        
+        switch(setCard.symbol) {
+            case 1: // ■
+                symbol = @"■";
+                break;
+            case 2: // ▲
+                symbol = @"▲";
+                break;
+            case 3: // ●
+                symbol = @"●";
+                break;
+            default: // should never get a ♠
+                symbol = @"♠";
+                break;
         }
         
         // initializes converted with however many symbols the card has
-        NSString *symbols = [[NSString stringWithFormat:@"%@",setCard.symbol]
+        NSString *symbols = [[NSString stringWithFormat:@"%@",symbol]
                           stringByPaddingToLength:setCard.number
-                          withString:[NSString stringWithFormat:@"%@",setCard.symbol]
+                          withString:[NSString stringWithFormat:@"%@",symbol]
                           startingAtIndex:0];
         converted = [[NSMutableAttributedString alloc] initWithString:symbols attributes:attributes];  
     }

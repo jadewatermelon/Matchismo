@@ -15,11 +15,13 @@
 {
     self = [super init];
     
+    int maxNumber = [SetCard maxNumber];
+    
     if (self) {
-        for (NSUInteger number = 1; number <= [SetCard maxNumber]; number++) {
-            for (NSString *symbol in [SetCard validSymbols]) {
-                for (NSString *shading in [SetCard validShadings]) {
-                    for (NSString *color in [SetCard validColors]) {
+        for (NSUInteger number = 1; number <= maxNumber; number++) {
+            for (NSUInteger symbol = 1; symbol <= maxNumber; symbol++) {
+                for (NSUInteger shading = 1; shading <= maxNumber; shading++) {
+                    for (NSUInteger color = 1; color <= maxNumber; color++) {
                         SetCard *card = [[SetCard alloc] init];
                         card.number = number;
                         card.symbol = symbol;
