@@ -42,33 +42,19 @@
     
     return score;
 }
-/*
-    if (otherCards.count == 1) {
-        PlayingCard *otherCard = [otherCards lastObject];
-        if ([otherCard.suit isEqualToString:self.suit]) {
-            score = 1;
-        } else if (otherCard.rank == self.rank) {
-            score = 4;
-        }
-    } else if (otherCards.count == 2) {
-        PlayingCard *otherCardA = [otherCards lastObject];
-        PlayingCard *otherCardB = [otherCards lastObject];
-        
-        if ([otherCardA.suit isEqualToString:self.suit] && [otherCardB.suit isEqualToString:self.suit]) {
-            score = 1;
-        } else if (otherCardA.rank == self.rank && otherCardB.rank == self.rank) {
-            score = 22;
-        }
-    }
-    
-    return score;
-}
-*/
-- (NSString *) contents
+
+- (NSString *)contents
 {
     NSArray *rankStrings = [PlayingCard rankStrings];
     return [rankStrings[self.rank] stringByAppendingString:self.suit];
 }
+
+- (NSString *)description
+{
+    return [self contents];
+}
+
+# pragma - Setters & Helpers -
 
 @synthesize suit = _suit;
 
@@ -103,11 +89,6 @@
 {
     if (rank <= [PlayingCard maxRank])
         _rank = rank;
-}
-
-- (NSString *)description
-{
-    return [self contents];
 }
 
 @end
