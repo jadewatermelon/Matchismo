@@ -45,4 +45,13 @@
     return randomCard;
 }
 
+- (void)removeCard:(Card *)card
+{
+    if (card) {
+        if ([self.cards containsObject:card]) {
+            [self.cards removeObject:card];
+        }
+    }
+}
+
 @end
