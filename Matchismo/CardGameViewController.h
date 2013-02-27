@@ -10,15 +10,18 @@
 #import "Deck.h"
 
 @interface CardGameViewController : UIViewController
-
-- (NSUInteger)numPlayableCards;
-- (NSString *)gameType;
-
 // abstract methods and properties
 - (Deck *)createDeck;
-- (void)updateUIButton:(UIButton *)button withCard:(Card *)card;
-- (NSAttributedString *)cardToAttributedString:(Card *)card;
+- (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card animate:(BOOL)animate;
+
+@property (strong, nonatomic) NSString *cardType;
+@property (strong, nonatomic) NSString *gameType;
 @property (nonatomic) NSUInteger startingCardCount;
 @property (nonatomic) NSUInteger matchingMode;
+
+// abstract methods left over from assignment 2 -- no longer needed
+
+//- (void)updateUIButton:(UIButton *)button withCard:(Card *)card;
+- (NSAttributedString *)cardToAttributedString:(Card *)card;
 
 @end

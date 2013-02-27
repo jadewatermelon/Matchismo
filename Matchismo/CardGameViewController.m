@@ -9,45 +9,52 @@
 #import "CardGameViewController.h"
 #import "CardMatchingGame.h"
 
-@interface CardGameViewController ()
+@interface CardGameViewController() <UICollectionViewDataSource>
 
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame *game;
 
 @property (weak, nonatomic) IBOutlet UILabel *lastPlayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
+@property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
 @property (nonatomic) int flipCount;
 
 @end
 
 @implementation CardGameViewController
 
+# pragma mark - CollectionView Protocol Implementation -
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;       // default return value is 1 just to show how to implement optional protocol
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+      numberOfItemsInSection:(NSInteger)section
+{
+    NSLog(@"Change to reflect how many cards are in play -- property numPlayableCards??");
+    return self.startingCardCount;  // will need to change to reflect how many cards are currently in play
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cardType forIndexPath:indexPath];
+    Card *card = [self.game cardAtIndex:indexPath.item];
+    [self updateCell:cell usingCard:card animate:NO];
+    return cell;
+}
+
 - (CardMatchingGame *)game
 {
     if (!_game)
-        _game = [[CardMatchingGame alloc] initWithCardCount:self.numPlayableCards // change to self.startingCardCount
+        _game = [[CardMatchingGame alloc] initWithCardCount:self.startingCardCount
                                                   usingDeck:[self createDeck]
                                                matchingMode:self.matchingMode
                                                    gameType:self.gameType];
     return _game;
-}
-
-// abstract
-- (Deck *)createDeck
-{
-    return nil;
-}
-
-- (NSString *)gameType
-{
-    return @"Unknown";
-}
-
-- (NSUInteger)numPlayableCards
-{
-    return [self.cardButtons count];
 }
 
 - (IBAction)historySliderChanged:(UISlider *)sender
@@ -68,18 +75,14 @@
     [self updateUI];
 }
 
-- (void)setCardButtons:(NSArray *)cardButtons
-{
-    _cardButtons = cardButtons;
-    [self updateUI];
-}
-
 - (void)updateUI
 {
-    for (UIButton *cardButton in self.cardButtons) {
-        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-        [self updateUIButton:cardButton withCard:card];
+    for (UICollectionViewCell *cell in [self.cardCollectionView visibleCells]) {
+        NSIndexPath *indexPath = [self.cardCollectionView indexPathForCell:cell];
+        Card *card = [self.game cardAtIndex:indexPath.item];
+        [self updateCell:cell usingCard:card animate:YES];
     }
+    
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
     self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory lastObject]];
@@ -88,23 +91,43 @@
     [self.historySlider setMaximumValue:(float) [self.game.moveHistory count]];
 }
 
+- (IBAction)flipCard:(UITapGestureRecognizer *)gesture
+{
+    CGPoint tapLocation = [gesture locationInView:self.cardCollectionView];
+    NSIndexPath *indexPath = [self.cardCollectionView indexPathForItemAtPoint:tapLocation];
+    
+    if (indexPath) {
+        [self.game flipCardAtIndex:indexPath.item];
+        
+        // only update flipCount if you are flipping up
+        //        if (!sender.selected)
+        self.flipCount++;
+        
+        [self.historySlider setValue:(float) [self.game.moveHistory count]];
+        [self updateUI];
+    }
+}
+
+
+# pragma mark - Abstract Methods -
+
+- (Deck *)createDeck
+{
+    return nil;
+}
+
+- (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card animate:(BOOL)animate
+{
+    //abstract
+}
+
+// methods leftover from assignment 2 -- no longer needed
+/*
 - (void)updateUIButton:(UIButton *)button withCard:(Card *)card
 {
     // abstract
 }
-
-- (IBAction)flipCard:(UIButton *)sender
-{
-    [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
-    
-    // only update flipCount if you are flipping up
-    if (!sender.selected)
-        self.flipCount++;
-    
-    [self.historySlider setValue:(float) [self.game.moveHistory count]];
-    [self updateUI];
-}
-
+*/
 - (NSAttributedString *)cardToAttributedString:(Card *)card
 {
     return nil;

@@ -9,6 +9,7 @@
 #import "SetCardGameViewController.h"
 #import "SetCardDeck.h"
 #import "SetCard.h"
+#import "SetCardCollectionViewCell.h"
 
 @interface SetCardGameViewController ()
 
@@ -16,14 +17,52 @@
 
 @implementation SetCardGameViewController
 
+#pragma mark - Abstract Method Implementations -
+
+- (Deck *)createDeck
+{
+    return [[SetCardDeck alloc] init];
+}
+
+- (void)updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card animate:(BOOL)animate
+{
+    if ([cell isKindOfClass:[SetCardCollectionViewCell class]]) {
+        SetCardView *setCardView = ((SetCardCollectionViewCell *)cell).setCardView;
+        if ([card isKindOfClass:[SetCard class]]) {
+            SetCard *setCard = (SetCard *)card;
+            setCardView.number = setCard.number;
+            setCardView.symbol = setCard.symbol;
+            setCardView.shading = setCard.shading;
+            setCardView.color = setCard.color;
+            if (animate && setCardView.faceUp != setCard.isFaceUp) {
+                [UIView transitionWithView:setCardView
+                                  duration:0.5
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^{
+                                }completion:NULL];
+            }
+            setCardView.faceUp = setCard.isFaceUp;
+            setCardView.alpha = setCard.isUnplayable ? 0.0 : 1.0;
+
+        }
+    }
+}
+
+#pragma mark - Abstract Property Getters -
+
+- (NSString *)cardType
+{
+    return @"SetCard";
+}
+
 - (NSString *)gameType
 {
     return @"Set";
 }
 
-- (Deck *)createDeck
+- (NSUInteger)startingCardCount
 {
-    return [[SetCardDeck alloc] init];
+    return 12;
 }
 
 - (NSUInteger)matchingMode
@@ -105,7 +144,7 @@
     }
     return converted ? converted : [[NSMutableAttributedString alloc] initWithString:@"" attributes:attributes];
 }
-
+/*
 - (void)updateUIButton:(UIButton *)button withCard:(Card *)card
 {
     if ([card isKindOfClass:[SetCard class]]) {
@@ -121,5 +160,5 @@
         button.enabled = !card.isUnplayable;
     }
 }
-
+*/
 @end

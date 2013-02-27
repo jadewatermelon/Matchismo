@@ -152,7 +152,7 @@
             unmatchedCard.faceUp = NO;
             unmatchedCard.orderClicked = 0;
         }            
-        card.faceUp = NO;                     // comment if you want the last card selected to remain faceup
+//        card.faceUp = NO;                     // comment if you want the last card selected to remain faceup
         card.orderClicked = 0;
 
         self.currentMove = MoveTypeMismatch;
