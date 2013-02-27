@@ -17,7 +17,10 @@
 - (id)initWithCardCount:(NSUInteger)count
               usingDeck:(Deck *)deck
            matchingMode:(NSUInteger)num
-               gameType:(NSString *)type;
+               gameType:(NSString *)type
+               flipCost:(NSUInteger)flipCost
+       mistmatchPenalty:(NSUInteger)mismatchPenalty
+             matchBonus:(NSUInteger)matchBonus;
 
 - (CardMatchingGameMove *)flipCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;

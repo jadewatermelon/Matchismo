@@ -51,7 +51,10 @@
         _game = [[CardMatchingGame alloc] initWithCardCount:self.startingCardCount
                                                   usingDeck:[self createDeck]
                                                matchingMode:self.matchingMode
-                                                   gameType:self.gameType];
+                                                   gameType:self.gameType
+                                                   flipCost:self.flipCost
+                                           mistmatchPenalty:self.mismatchPenalty
+                                                 matchBonus:self.matchBonus];
     return _game;
 }
 

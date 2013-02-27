@@ -111,7 +111,6 @@
     }
 }
 
-
 #pragma mark - Abstract Property Getters -
 
 - (NSString *)cardType
@@ -132,6 +131,21 @@
 - (NSUInteger)matchingMode
 {
     return 3;
+}
+
+- (NSUInteger)flipCost
+{
+    return 0;
+}
+
+- (NSUInteger)mismatchPenalty
+{
+    return 3;
+}
+
+- (NSUInteger)matchBonus
+{
+    return 1;
 }
 
 - (NSAttributedString *)cardToAttributedString:(Card *)card

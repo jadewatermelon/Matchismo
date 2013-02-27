@@ -164,6 +164,20 @@
     return 2;
 }
 
+- (NSUInteger)flipCost
+{
+    return 1;
+}
+
+- (NSUInteger)mismatchPenalty
+{
+    return 2;
+}
+
+- (NSUInteger)matchBonus
+{
+    return 4;
+}
 
 - (NSAttributedString *)cardToAttributedString:(Card *)card
 {

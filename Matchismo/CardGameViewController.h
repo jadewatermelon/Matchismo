@@ -20,6 +20,9 @@
 @property (strong, nonatomic) NSString *gameType;
 @property (nonatomic) NSUInteger startingCardCount;
 @property (nonatomic) NSUInteger matchingMode;
+@property (nonatomic) NSUInteger flipCost;
+@property (nonatomic) NSUInteger mismatchPenalty;
+@property (nonatomic) NSUInteger matchBonus;
 
 // abstract methods left over from assignment 2 -- no longer needed
 

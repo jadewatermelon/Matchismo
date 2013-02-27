@@ -17,6 +17,9 @@
 @property (nonatomic) NSString* gameType;
 @property (strong, nonatomic) NSMutableArray *faceUpCards;
 
+@property (nonatomic) NSUInteger flipCost;
+@property (nonatomic) NSUInteger mismatchPenalty;
+@property (nonatomic) NSUInteger matchBonus;
 
 @property (nonatomic, readwrite) NSMutableArray *moveHistory; // of type CardMatchingGameMove
 @property (nonatomic) MoveType currentMoveType;
@@ -24,10 +27,6 @@
 @end
 
 @implementation CardMatchingGame
-
-#define FLIP_COST 1
-#define MISMATCH_PENALTY 2
-#define MATCH_BONUS 4
 
 - (NSMutableArray *)cards
 {
@@ -63,6 +62,9 @@
               usingDeck:(Deck *)deck
            matchingMode:(NSUInteger)num
                gameType:(NSString *)type
+               flipCost:(NSUInteger)flipCost
+       mistmatchPenalty:(NSUInteger)mismatchPenalty
+             matchBonus:(NSUInteger)matchBonus
 {
     self = [super init];
     
@@ -79,6 +81,9 @@
         self.deck = deck;
         self.numCardsToMatch = num;
         self.gameType = type;
+        self.flipCost = flipCost;
+        self.mismatchPenalty = mismatchPenalty;
+        self.matchBonus = matchBonus;
     }
     return self;
 }
@@ -104,7 +109,7 @@
     if (card && !card.isUnplayable) {
         if (!card.isFaceUp) {
             self.currentMoveType = MoveTypeFlipUp;
-            self.currentScoreChange -= FLIP_COST;  // self.score -= FLIP_COST;
+            self.currentScoreChange -= self.flipCost;
         }
 
         card.faceUp = !card.faceUp;
@@ -176,7 +181,7 @@
         card.orderClicked = 0;
         
         self.currentMoveType = MoveTypeMatch;
-        self.currentScoreChange += matchScore * MATCH_BONUS;
+        self.currentScoreChange += matchScore * self.matchBonus;
     } else {
         for (Card *unmatchedCard in cardsToMatch) {
             unmatchedCard.faceUp = NO;
@@ -186,7 +191,7 @@
         card.orderClicked = 0;
 
         self.currentMoveType = MoveTypeMismatch;
-        self.currentScoreChange -= MISMATCH_PENALTY;
+        self.currentScoreChange -= self.mismatchPenalty;
     }
 }
 @end
