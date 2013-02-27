@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, MoveType) {
 
 
 @property (nonatomic) NSArray *cards;
-@property (nonatomic) MoveType move;
+@property (nonatomic) MoveType moveType;
 @property (nonatomic) NSInteger scoreChange;
 
 @end

@@ -48,6 +48,70 @@
     }
 }
 
+#define CARD_WIDTH_TO_HEIGHT_RATIO 0.7
+#define CARD_OFFSET 2.5
+
+- (void)updateStatus:(UIView *)view usingMove:(CardMatchingGameMove *)move
+{
+    [self clearStatus:view];
+    NSString *status = [self moveToString:move];
+    NSInteger offset = 0;
+    
+    CGFloat cardWidth = view.bounds.size.height * CARD_WIDTH_TO_HEIGHT_RATIO;
+    CGFloat cardHeight = view.bounds.size.height;
+    
+    CGFloat labelWidth = view.bounds.size.width - ([self matchingMode] * (cardWidth + CARD_OFFSET) + CARD_OFFSET);
+    CGFloat labelHeight = view.bounds.size.height;
+    
+    if (move.moveType == MoveTypeFlipUp) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,labelWidth,labelHeight)];
+        
+        label.adjustsFontSizeToFitWidth = YES;
+        label.textAlignment = NSTextAlignmentRight;
+        label.autoresizesSubviews = YES;
+        label.backgroundColor = [UIColor clearColor];
+        
+        label.text = status;
+        [view addSubview:label];
+        
+        offset += label.bounds.size.width + CARD_OFFSET;
+    }
+    
+    for (Card *card in move.cards) {
+        if ([card isKindOfClass:[SetCard class]]) {
+            SetCard *setCard = (SetCard *)card;
+            SetCardView *setCardView = [[SetCardView alloc] initWithFrame:CGRectMake(offset,0,cardWidth,cardHeight)];
+            
+            setCardView.number = setCard.number;
+            setCardView.symbol = setCard.symbol;
+            setCardView.shading = setCard.shading;
+            setCardView.color = setCard.color;
+            setCardView.faceUp = NO;
+            
+            setCardView.opaque = NO;
+            [setCardView setBackgroundColor:[UIColor clearColor]];
+            
+            [view addSubview:setCardView];
+            
+            offset += cardWidth + CARD_OFFSET;
+        }
+    }
+    
+    if (move.moveType == MoveTypeMatch || move.moveType == MoveTypeMismatch) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(offset,0,labelWidth,labelHeight)];
+        
+        label.font = [UIFont systemFontOfSize:12];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.autoresizesSubviews = YES;
+        label.backgroundColor = [UIColor clearColor];
+        label.numberOfLines = 2;
+        
+        label.text = status;
+        [view addSubview:label];
+    }
+}
+
+
 #pragma mark - Abstract Property Getters -
 
 - (NSString *)cardType

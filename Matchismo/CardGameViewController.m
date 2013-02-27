@@ -13,10 +13,11 @@
 
 @property (strong, nonatomic) CardMatchingGame *game;
 
-@property (weak, nonatomic) IBOutlet UILabel *lastPlayLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *lastPlayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
+@property (weak, nonatomic) IBOutlet UIView *statusView;
 
 @end
 
@@ -26,14 +27,13 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;       // default return value is 1 just to show how to implement optional protocol
+        return 1;// default return value is 1 just to show how to implement optional protocol
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
       numberOfItemsInSection:(NSInteger)section
 {
-//    NSLog(@"Change to reflect how many cards are in play -- property numPlayableCards??");
-    return self.game.numCardsInPlay;  // will need to change to reflect how many cards are currently in play
+    return self.game.numCardsInPlay;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -62,13 +62,16 @@
     if (index < 0 || index > [self.game.moveHistory count] - 1)
         return;
     
-    self.lastPlayLabel.alpha = (index < [self.game.moveHistory count] - 1) ? 0.3 : 1.0;
-    self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory objectAtIndex:index]];
+    //self.lastPlayLabel.alpha = (index < [self.game.moveHistory count] - 1) ? 0.3 : 1.0;
+    //self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory objectAtIndex:index]];
+    [self updateStatus:self.statusView usingMove:[self.game.moveHistory objectAtIndex:index]];
+    self.statusView.alpha = (index < [self.game.moveHistory count] - 1) ? 0.3 : 1.0;
 }
 
 - (IBAction)dealNewCards
 {
     self.game = nil;
+    [self clearStatus:self.statusView];
     [self updateUI];
 }
 
@@ -81,10 +84,19 @@
     }
     
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory lastObject]];
+    [self updateStatus:self.statusView usingMove:[self.game.moveHistory lastObject]];
+//    self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory lastObject]];
     
     [self.historySlider setMinimumValue:0.0];
     [self.historySlider setMaximumValue:(float) [self.game.moveHistory count]];
+}
+
+-(void)clearStatus:(UIView *)view
+{
+    for (UIView *subview in [view subviews])
+    {
+        [subview removeFromSuperview];
+    }
 }
 
 #define AUTO_REPLACE false
@@ -98,10 +110,10 @@
         CardMatchingGameMove *move = [self.game flipCardAtIndex:indexPath.item];
         // clear label
         if (move) {
-            // update label
+            
         }
         
-        if (move && move.move == MoveTypeMatch) {
+        if (move && move.moveType == MoveTypeMatch) {
             NSMutableArray *indexPathsForMatchedCards = [[NSMutableArray alloc] init];
             
             for (Card *card in move.cards) {
@@ -139,6 +151,11 @@
     //abstract
 }
 
+- (void)updateStatus:(UIView *)view usingMove:(CardMatchingGameMove *)move
+{
+    // abstract
+}
+
 // methods leftover from assignment 2 -- no longer needed
 /*
 - (void)updateUIButton:(UIButton *)button withCard:(Card *)card
@@ -149,6 +166,22 @@
 - (NSAttributedString *)cardToAttributedString:(Card *)card
 {
     return nil;
+}
+
+- (NSString *)moveToString:(CardMatchingGameMove *)move
+{
+    NSString *moveResults;
+    
+    if (move.moveType == MoveTypeFlipDown) {
+        return @"";
+    } else if (move.moveType == MoveTypeFlipUp) {
+        moveResults = @"Flipped up: ";
+    } else if (move.moveType == MoveTypeMatch) {
+        moveResults = [NSString stringWithFormat:@"⭐Match⭐\nfor %d points", move.scoreChange];
+    } else if (move.moveType == MoveTypeMismatch) {
+       moveResults = [NSString stringWithFormat:@"❌Mismatch❌\n%d point penalty", abs(move.scoreChange)];
+    }
+    return moveResults;
 }
 
 - (NSAttributedString *)moveToAttributedString:(CardMatchingGameMove *)move
@@ -164,16 +197,16 @@
         [cardsToInsert appendAttributedString:[card isEqual:[move.cards lastObject]] ? nothing : andper];
     }
     
-    if (move.move == MoveTypeFlipDown) {
+    if (move.moveType == MoveTypeFlipDown) {
         return nothing;
-    } else if (move.move == MoveTypeFlipUp) {
+    } else if (move.moveType == MoveTypeFlipUp) {
         moveSummary = [[NSMutableAttributedString alloc] initWithString:@"Flipped up "];
         [moveSummary appendAttributedString:cardsToInsert];
-    } else if (move.move == MoveTypeMatch) {
+    } else if (move.moveType == MoveTypeMatch) {
         moveSummary = [[NSMutableAttributedString alloc] initWithString:@"Matched "];
         [moveSummary appendAttributedString:cardsToInsert];
         [moveSummary appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\nfor %d points",move.scoreChange]]];
-    } else if (move.move == MoveTypeMismatch) {
+    } else if (move.moveType == MoveTypeMismatch) {
         moveSummary = [[NSMutableAttributedString alloc] initWithAttributedString:cardsToInsert];
         [moveSummary appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" do not match\n%d point penalty",move.scoreChange]]];
     }

@@ -18,7 +18,7 @@
     self = [super init];
     
     if (self) {
-        _move = moveType;
+        _moveType = moveType;
         _cards = flippedCards;
         _scoreChange = scoreChange;
     }
@@ -30,13 +30,13 @@
     NSString * descriptions = @"";
     NSString *cardStrings = [self.cards componentsJoinedByString:@"&"];
     
-    if (self.move == MoveTypeFlipDown) {
+    if (self.moveType == MoveTypeFlipDown) {
         descriptions = @"";
-    } else if (self.move == MoveTypeFlipUp) {
+    } else if (self.moveType == MoveTypeFlipUp) {
         descriptions = [NSString stringWithFormat:@"Flipped up %@",cardStrings];
-    } else if (self.move == MoveTypeMatch) {
+    } else if (self.moveType == MoveTypeMatch) {
         descriptions = [NSString stringWithFormat:@"Matched %@\nfor %d points!", cardStrings, self.scoreChange];
-    } else if (self.move == MoveTypeMismatch) {
+    } else if (self.moveType == MoveTypeMismatch) {
         descriptions = [NSString stringWithFormat:@"%@ do not match!\n%d point penalty", cardStrings, self.scoreChange];
     }
     return descriptions;
