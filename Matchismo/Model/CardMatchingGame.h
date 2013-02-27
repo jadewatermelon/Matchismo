@@ -23,7 +23,8 @@
 
 - (Card *)cardAtIndex:(NSUInteger)index;
 
-@property (nonatomic, readonly) int score;
+@property (nonatomic, readonly) NSInteger score;
+@property (nonatomic, readonly) NSInteger numCardsInPlay;
 @property (nonatomic, readonly) NSMutableArray *moveHistory; // of type CardMatchingGameMove
 @property (nonatomic) CardMatchingGameResults *results;
 

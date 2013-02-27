@@ -10,7 +10,8 @@
 
 @interface CardMatchingGame()
 @property (strong, nonatomic) NSMutableArray *cards; // of type Card
-@property (nonatomic, readwrite) int score;
+@property (nonatomic, readwrite) NSInteger score;
+@property (nonatomic, readwrite) NSInteger numCardsInPlay;
 @property (nonatomic, readwrite) NSMutableArray *moveHistory; // of type CardMatchingGameMove
 @property (nonatomic) NSUInteger numCardsToMatch;
 @property (nonatomic) NSString* gameType;
