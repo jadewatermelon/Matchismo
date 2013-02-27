@@ -19,12 +19,15 @@
            matchingMode:(NSUInteger)num
                gameType:(NSString *)type;
 
-- (void)flipCardAtIndex:(NSUInteger)index;
-
+- (CardMatchingGameMove *)flipCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
+- (NSUInteger)indexOfCard:(Card *) card;
+- (void)removeCardAtIndex:(NSUInteger)index;
+- (void)addCardAtIndex:(NSUInteger)index;
 
+@property (strong, nonatomic) Deck *deck;
 @property (nonatomic, readonly) NSInteger score;
-@property (nonatomic, readonly) NSInteger numCardsInPlay;
+@property (nonatomic, readonly) NSUInteger numCardsInPlay;
 @property (nonatomic, readonly) NSMutableArray *moveHistory; // of type CardMatchingGameMove
 @property (nonatomic) CardMatchingGameResults *results;
 

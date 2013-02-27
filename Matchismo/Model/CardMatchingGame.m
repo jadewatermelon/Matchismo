@@ -9,15 +9,17 @@
 #import "CardMatchingGame.h"
 
 @interface CardMatchingGame()
+
 @property (strong, nonatomic) NSMutableArray *cards; // of type Card
 @property (nonatomic, readwrite) NSInteger score;
-@property (nonatomic, readwrite) NSInteger numCardsInPlay;
-@property (nonatomic, readwrite) NSMutableArray *moveHistory; // of type CardMatchingGameMove
+@property (nonatomic, readwrite) NSUInteger numCardsInPlay;
 @property (nonatomic) NSUInteger numCardsToMatch;
 @property (nonatomic) NSString* gameType;
 @property (strong, nonatomic) NSMutableArray *faceUpCards;
 
-@property (nonatomic) MoveType currentMove;
+
+@property (nonatomic, readwrite) NSMutableArray *moveHistory; // of type CardMatchingGameMove
+@property (nonatomic) MoveType currentMoveType;
 @property (nonatomic) int currentScoreChange;
 @end
 
@@ -45,6 +47,11 @@
     return _faceUpCards;
 }
 
+- (NSUInteger)numCardsInPlay
+{
+    return [self.cards count];
+}
+
 - (CardMatchingGameResults *)results
 {
     if (!_results)
@@ -68,6 +75,8 @@
                 self.cards[i] = card;
             }
         }
+        self.numCardsInPlay = num;
+        self.deck = deck;
         self.numCardsToMatch = num;
         self.gameType = type;
     }
@@ -79,16 +88,22 @@
     return (index < self.cards.count) ? self.cards[index] : nil;
 }
 
-- (void)flipCardAtIndex:(NSUInteger)index
+- (NSUInteger)indexOfCard:(Card *)card
 {
-    self.currentMove = MoveTypeFlipDown;
+    return [self.cards indexOfObject:card];
+}
+
+- (CardMatchingGameMove *)flipCardAtIndex:(NSUInteger)index
+{
+    CardMatchingGameMove *currentMove = nil;
+    self.currentMoveType = MoveTypeFlipDown;
     self.currentScoreChange = 0;
     
     Card *card = [self cardAtIndex:index];
     
     if (card && !card.isUnplayable) {
         if (!card.isFaceUp) {
-            self.currentMove = MoveTypeFlipUp;
+            self.currentMoveType = MoveTypeFlipUp;
             self.currentScoreChange -= FLIP_COST;  // self.score -= FLIP_COST;
         }
 
@@ -109,12 +124,13 @@
             [self.moveHistory removeLastObject];
         }
         
-        CardMatchingGameMove *currentMove = [[CardMatchingGameMove alloc] initWithMoveType:self.currentMove withFlippedCards:currentCardOrder withScoreChange:self.currentScoreChange];
+        currentMove = [[CardMatchingGameMove alloc] initWithMoveType:self.currentMoveType withFlippedCards:currentCardOrder withScoreChange:self.currentScoreChange];
         [self.moveHistory addObject:currentMove];
         self.score += self.currentScoreChange;
         // update game results for every flip
         self.results.score = self.score;
     }
+    return currentMove;
 }
 
 - (NSUInteger)numFaceUpCards
@@ -128,6 +144,19 @@
         }
     }
     return num;
+}
+
+- (void)removeCardAtIndex:(NSUInteger)index
+{
+    [self.cards removeObjectAtIndex:index];
+}
+
+- (void)addCardAtIndex:(NSUInteger)index
+{
+    Card *card = [self.deck drawRandomCard];
+    if (card) {
+        [self.cards insertObject:card atIndex:index];
+    }
 }
 
 - (void)matchFaceUpCards
@@ -146,7 +175,7 @@
         card.unplayable = YES;
         card.orderClicked = 0;
         
-        self.currentMove = MoveTypeMatch;
+        self.currentMoveType = MoveTypeMatch;
         self.currentScoreChange += matchScore * MATCH_BONUS;
     } else {
         for (Card *unmatchedCard in cardsToMatch) {
@@ -156,7 +185,7 @@
 //        card.faceUp = NO;                     // comment if you want the last card selected to remain faceup
         card.orderClicked = 0;
 
-        self.currentMove = MoveTypeMismatch;
+        self.currentMoveType = MoveTypeMismatch;
         self.currentScoreChange -= MISMATCH_PENALTY;
     }
 }

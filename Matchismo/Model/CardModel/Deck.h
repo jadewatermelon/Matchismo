@@ -15,6 +15,4 @@
 
 - (Card *)drawRandomCard;
 
-- (void)removeCard:(Card *)card;
-
 @end

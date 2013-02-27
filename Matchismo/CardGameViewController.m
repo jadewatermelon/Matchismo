@@ -32,8 +32,8 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView
       numberOfItemsInSection:(NSInteger)section
 {
-    NSLog(@"Change to reflect how many cards are in play -- property numPlayableCards??");
-    return self.startingCardCount;  // will need to change to reflect how many cards are currently in play
+//    NSLog(@"Change to reflect how many cards are in play -- property numPlayableCards??");
+    return self.game.numCardsInPlay;  // will need to change to reflect how many cards are currently in play
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -87,14 +87,40 @@
     [self.historySlider setMaximumValue:(float) [self.game.moveHistory count]];
 }
 
+#define AUTO_REPLACE false
+
 - (IBAction)flipCard:(UITapGestureRecognizer *)gesture
 {
     CGPoint tapLocation = [gesture locationInView:self.cardCollectionView];
     NSIndexPath *indexPath = [self.cardCollectionView indexPathForItemAtPoint:tapLocation];
     
     if (indexPath) {
-        [self.game flipCardAtIndex:indexPath.item];
+        CardMatchingGameMove *move = [self.game flipCardAtIndex:indexPath.item];
+        // clear label
+        if (move) {
+            // update label
+        }
         
+        if (move && move.move == MoveTypeMatch) {
+            NSMutableArray *indexPathsForMatchedCards = [[NSMutableArray alloc] init];
+            
+            for (Card *card in move.cards) {
+                [indexPathsForMatchedCards addObject:[NSIndexPath indexPathForItem:[self.game indexOfCard:card] inSection:[self numberOfSectionsInCollectionView:self.cardCollectionView]-1]];
+            }
+            
+            for (Card *card in move.cards) {
+                [self.game removeCardAtIndex:[self.game indexOfCard:card]];
+            }
+            
+            [self.cardCollectionView deleteItemsAtIndexPaths:indexPathsForMatchedCards];
+            if (AUTO_REPLACE)
+            {
+                for (NSIndexPath *indexPath in indexPathsForMatchedCards) {
+                    [self.game addCardAtIndex:indexPath.item];
+                }
+                [self.cardCollectionView insertItemsAtIndexPaths:indexPathsForMatchedCards];
+            }
+        }
         [self.historySlider setValue:(float) [self.game.moveHistory count]];
         [self updateUI];
     }
