@@ -14,11 +14,9 @@
 @property (strong, nonatomic) CardMatchingGame *game;
 
 @property (weak, nonatomic) IBOutlet UILabel *lastPlayLabel;
-@property (weak, nonatomic) IBOutlet UILabel *flipLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
-@property (nonatomic) int flipCount;
 
 @end
 
@@ -71,7 +69,6 @@
 - (IBAction)dealNewCards
 {
     self.game = nil;
-    self.flipCount = 0;
     [self updateUI];
 }
 
@@ -84,7 +81,6 @@
     }
     
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.flipLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
     self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory lastObject]];
     
     [self.historySlider setMinimumValue:0.0];
@@ -98,10 +94,6 @@
     
     if (indexPath) {
         [self.game flipCardAtIndex:indexPath.item];
-        
-        // only update flipCount if you are flipping up
-        //        if (!sender.selected)
-        self.flipCount++;
         
         [self.historySlider setValue:(float) [self.game.moveHistory count]];
         [self updateUI];

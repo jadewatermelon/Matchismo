@@ -12,20 +12,12 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="411"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Flips: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oew-Jv-Mqv">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="AtJ-6Y-Is4"/>
-                                    <constraint firstAttribute="width" constant="88" id="K0u-FA-CeJ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S14-RU-CFD">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="a0Y-Kv-0Kd"/>
+                                    <constraint firstAttribute="width" constant="88" id="s6f-fS-2V7"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -111,31 +103,27 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="CVe-q2-Uo6" secondAttribute="bottom" constant="45" id="2II-9b-YLj"/>
                             <constraint firstAttribute="bottom" secondItem="WQu-6J-dgK" secondAttribute="bottom" constant="6" id="4bQ-lF-d0r"/>
-                            <constraint firstItem="S14-RU-CFD" firstAttribute="trailing" secondItem="Oew-Jv-Mqv" secondAttribute="trailing" type="default" id="AaA-Rk-IF8"/>
                             <constraint firstItem="8kQ-hj-sfA" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="Bxa-tL-2LL"/>
                             <constraint firstItem="CVe-q2-Uo6" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="DQS-8H-1M8"/>
                             <constraint firstItem="MNb-9S-ots" firstAttribute="bottom" secondItem="WQu-6J-dgK" secondAttribute="bottom" type="default" id="PP7-1w-2vd"/>
                             <constraint firstItem="8kQ-hj-sfA" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="RY6-xl-H4M"/>
+                            <constraint firstItem="S14-RU-CFD" firstAttribute="top" secondItem="CVe-q2-Uo6" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="VcO-mW-Ch4"/>
                             <constraint firstAttribute="trailing" secondItem="CVe-q2-Uo6" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="ZL1-VB-jgZ"/>
-                            <constraint firstItem="Oew-Jv-Mqv" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="ajP-l5-8Oc"/>
                             <constraint firstItem="S14-RU-CFD" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="doT-na-NxN"/>
+                            <constraint firstItem="S14-RU-CFD" firstAttribute="centerY" secondItem="WQu-6J-dgK" secondAttribute="centerY" type="default" id="eHx-HJ-fOM"/>
                             <constraint firstItem="WQu-6J-dgK" firstAttribute="centerX" secondItem="CVe-q2-Uo6" secondAttribute="centerX" type="default" id="iVr-7C-bG4"/>
                             <constraint firstAttribute="trailing" secondItem="WfZ-QG-O9Q" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="l8y-sg-Z2D"/>
                             <constraint firstItem="WQu-6J-dgK" firstAttribute="top" secondItem="WfZ-QG-O9Q" secondAttribute="top" type="default" id="m44-Rz-48U"/>
                             <constraint firstItem="WfZ-QG-O9Q" firstAttribute="leading" secondItem="WQu-6J-dgK" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="mLi-BB-t5E"/>
-                            <constraint firstAttribute="bottom" secondItem="S14-RU-CFD" secondAttribute="bottom" constant="5" id="mx0-SA-TBn"/>
                             <constraint firstItem="8kQ-hj-sfA" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="s1L-s6-q4d"/>
                             <constraint firstItem="MNb-9S-ots" firstAttribute="leading" secondItem="WQu-6J-dgK" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="vp9-fY-2Ra"/>
                             <constraint firstAttribute="trailing" secondItem="MNb-9S-ots" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="w3R-86-ajy"/>
-                            <constraint firstItem="Oew-Jv-Mqv" firstAttribute="baseline" secondItem="WfZ-QG-O9Q" secondAttribute="baseline" type="default" id="xCf-rT-iEL"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Matching" image="matching.png" id="sIL-GE-yVt"/>
                     <connections>
                         <outlet property="cardCollectionView" destination="8kQ-hj-sfA" id="zNe-Gs-Qo1"/>
-                        <outlet property="flipLabel" destination="Oew-Jv-Mqv" id="YsL-pp-0MK"/>
                         <outlet property="historySlider" destination="MNb-9S-ots" id="KrN-59-J30"/>
                         <outlet property="lastPlayLabel" destination="CVe-q2-Uo6" id="CHy-ru-PfD"/>
                         <outlet property="scoreLabel" destination="S14-RU-CFD" id="aHQ-Es-uZU"/>
@@ -182,17 +170,12 @@
                                     <action selector="dealNewCards" destination="jd4-XZ-YK3" eventType="touchUpInside" id="Z9v-o8-jls"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Flips: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLT-mu-VBo">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="dG2-Bq-l7p"/>
-                                    <constraint firstAttribute="width" constant="88" id="w4t-6v-uas"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ieh-C6-ABW">
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="23" id="JZE-QM-88v"/>
+                                    <constraint firstAttribute="width" constant="88" id="VAz-Q1-dc3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -260,28 +243,23 @@
                             <constraint firstItem="zFG-hm-UX9" firstAttribute="centerX" secondItem="zDJ-S0-76q" secondAttribute="centerX" type="default" id="1Je-fb-hkj"/>
                             <constraint firstItem="zCt-Vz-3T0" firstAttribute="leading" secondItem="zFG-hm-UX9" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="3fP-nG-Vfq"/>
                             <constraint firstItem="ieh-C6-ABW" firstAttribute="leading" secondItem="TMa-NP-a1d" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="42G-Z3-gIg"/>
+                            <constraint firstAttribute="bottom" secondItem="zFG-hm-UX9" secondAttribute="bottom" constant="6" id="4gZ-tH-7U3"/>
                             <constraint firstItem="MFb-Ou-0aV" firstAttribute="top" secondItem="TMa-NP-a1d" secondAttribute="top" type="default" id="8jD-yy-YMA"/>
+                            <constraint firstItem="ieh-C6-ABW" firstAttribute="top" secondItem="zDJ-S0-76q" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="AVV-F6-Nfk"/>
                             <constraint firstItem="zDJ-S0-76q" firstAttribute="leading" secondItem="TMa-NP-a1d" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="B06-1g-j38"/>
-                            <constraint firstAttribute="bottom" secondItem="zDJ-S0-76q" secondAttribute="bottom" constant="45" id="Hx2-Cq-GE2"/>
                             <constraint firstItem="v9x-Y6-RAk" firstAttribute="bottom" secondItem="zFG-hm-UX9" secondAttribute="bottom" type="default" id="N03-J3-sya"/>
-                            <constraint firstItem="ieh-C6-ABW" firstAttribute="trailing" secondItem="JLT-mu-VBo" secondAttribute="trailing" type="default" id="Ue1-qH-6Wx"/>
                             <constraint firstAttribute="trailing" secondItem="zDJ-S0-76q" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="d4V-xQ-29B"/>
                             <constraint firstAttribute="trailing" secondItem="v9x-Y6-RAk" secondAttribute="trailing" constant="21" id="exA-pg-y7B"/>
-                            <constraint firstAttribute="bottom" secondItem="ieh-C6-ABW" secondAttribute="bottom" constant="5" id="feh-lO-cBF"/>
-                            <constraint firstItem="v9x-Y6-RAk" firstAttribute="top" secondItem="ieh-C6-ABW" secondAttribute="top" type="default" id="fuZ-vK-dO2"/>
                             <constraint firstAttribute="trailing" secondItem="zCt-Vz-3T0" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="g5o-Sh-mIi"/>
                             <constraint firstItem="MFb-Ou-0aV" firstAttribute="trailing" secondItem="TMa-NP-a1d" secondAttribute="trailing" type="default" id="hqC-gL-xR4"/>
                             <constraint firstItem="zCt-Vz-3T0" firstAttribute="top" secondItem="zFG-hm-UX9" secondAttribute="top" type="default" id="iWE-PG-A0I"/>
-                            <constraint firstItem="ieh-C6-ABW" firstAttribute="centerY" secondItem="v9x-Y6-RAk" secondAttribute="centerY" type="default" id="kGG-t3-onP"/>
                             <constraint firstItem="MFb-Ou-0aV" firstAttribute="leading" secondItem="TMa-NP-a1d" secondAttribute="leading" type="default" id="nLO-MD-PJJ"/>
-                            <constraint firstItem="JLT-mu-VBo" firstAttribute="baseline" secondItem="zCt-Vz-3T0" secondAttribute="baseline" type="default" id="xLY-Wa-hjc"/>
-                            <constraint firstItem="JLT-mu-VBo" firstAttribute="leading" secondItem="TMa-NP-a1d" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="zbQ-5J-MFg"/>
+                            <constraint firstItem="ieh-C6-ABW" firstAttribute="centerY" secondItem="zFG-hm-UX9" secondAttribute="centerY" type="default" id="yeW-lC-Y7U"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Set" image="set.png" id="nud-LQ-AiS"/>
                     <connections>
                         <outlet property="cardCollectionView" destination="MFb-Ou-0aV" id="Axk-KK-eSd"/>
-                        <outlet property="flipLabel" destination="JLT-mu-VBo" id="Grg-rT-ewE"/>
                         <outlet property="historySlider" destination="v9x-Y6-RAk" id="GaS-7L-f2O"/>
                         <outlet property="lastPlayLabel" destination="zDJ-S0-76q" id="q3u-yG-Ykc"/>
                         <outlet property="scoreLabel" destination="ieh-C6-ABW" id="dsx-JS-EbB"/>
@@ -440,68 +418,6 @@
         <image name="set.png" width="30" height="30"/>
         <image name="settings.png" width="30" height="30"/>
     </resources>
-    <classes>
-        <class className="CardGameViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="flipCard:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="historySliderChanged:" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="cardCollectionView" candidateClass="UICollectionView"/>
-                <relationship kind="outlet" name="flipLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="historySlider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="lastPlayLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="GameResultsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameResultsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="display" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PlayingCardCollectionViewCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardCollectionViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="playingCardView" candidateClass="PlayingCardView"/>
-            </relationships>
-        </class>
-        <class className="PlayingCardGameViewController" superclassName="CardGameViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardGameViewController.h"/>
-        </class>
-        <class className="PlayingCardView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardView.h"/>
-        </class>
-        <class className="SetCardCollectionViewCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetCardCollectionViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="setCardView" candidateClass="SetCardView"/>
-            </relationships>
-        </class>
-        <class className="SetCardGameViewController" superclassName="CardGameViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetCardGameViewController.h"/>
-        </class>
-        <class className="SetCardView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetCardView.h"/>
-        </class>
-        <class className="SettingsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-        </class>
-        <class className="UICollectionReusableView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
-        </class>
-        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
-        </class>
-        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
