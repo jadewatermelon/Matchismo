@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
+@property (weak, nonatomic) IBOutlet UIButton *dealMoreCards;
 
 @end
 
@@ -65,25 +66,36 @@
     self.game = nil;
     [self clearStatus:self.statusView];
     [self.cardCollectionView reloadData];
+    
+    self.dealMoreCards.alpha = 1.0;
+    self.dealMoreCards.enabled = YES;
+    
     [self updateUI];
 }
 
 - (IBAction)dealMoreCards:(UIButton *)sender
 {
     // in future is it possible to fill in blanks from cards that were just matched... AUTO_REPLACE below
-    for (int i = 0; i < sender.tag; i++) {
-        [self.game addCardAtIndex:self.game.numCardsInPlay];
-    }
-    [self.cardCollectionView reloadData];
-    
-    [self.cardCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:(self.game.numCardsInPlay- 1) inSection:0]
-                                    atScrollPosition:UICollectionViewScrollPositionBottom
-                                            animated:YES];
-    
     if ([self.game.deck isEmpty]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Deck is empty!"
+                                                        message:@"Continue making matches or deal new game."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
         sender.enabled = NO;
         sender.alpha = 0.5;
-    }
+    } else {
+        for (int i = 0; i < sender.tag; i++) {
+            [self.game addCardAtIndex:self.game.numCardsInPlay];
+        }
+        [self.cardCollectionView reloadData];
+        
+        [self.cardCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:(self.game.numCardsInPlay- 1) inSection:0]
+                                        atScrollPosition:UICollectionViewScrollPositionBottom
+                                                animated:YES];
+    }    
 }
 
 #define AUTO_REPLACE false
@@ -95,10 +107,6 @@
     
     if (indexPath) {
         CardMatchingGameMove *move = [self.game flipCardAtIndex:indexPath.item];
-        // clear label
-        if (move) {
-            
-        }
         
         if (move && move.moveType == MoveTypeMatch) {
             NSMutableArray *indexPathsForMatchedCards = [[NSMutableArray alloc] init];

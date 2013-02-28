@@ -232,6 +232,7 @@
                     <tabBarItem key="tabBarItem" title="Set" image="set.png" id="nud-LQ-AiS"/>
                     <connections>
                         <outlet property="cardCollectionView" destination="MFb-Ou-0aV" id="Axk-KK-eSd"/>
+                        <outlet property="dealMoreCards" destination="Z5f-JM-z1Q" id="i1B-FO-b5t"/>
                         <outlet property="scoreLabel" destination="ieh-C6-ABW" id="dsx-JS-EbB"/>
                         <outlet property="statusView" destination="O8S-z1-7P4" id="v93-HE-zPa"/>
                     </connections>
@@ -397,6 +398,7 @@
                 <relationship kind="action" name="flipCard:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="historySliderChanged:" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="cardCollectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="dealMoreCards" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="historySlider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="statusView" candidateClass="UIView"/>
