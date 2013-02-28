@@ -39,7 +39,7 @@
                                 </connections>
                             </button>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8kQ-hj-sfA">
-                                <color key="backgroundColor" red="0.25098040699958801" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="336" id="aAQ-71-icc"/>
@@ -86,13 +86,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="WQu-6J-dgK" secondAttribute="bottom" constant="11" id="1Q0-ty-zvd"/>
-                            <constraint firstAttribute="trailing" secondItem="pkJ-g7-cwG" secondAttribute="trailing" constant="80" id="2Ox-o7-XFE"/>
+                            <constraint firstAttribute="bottom" secondItem="WQu-6J-dgK" secondAttribute="bottom" constant="11" id="1Zo-CZ-pXM"/>
                             <constraint firstAttribute="bottom" secondItem="S14-RU-CFD" secondAttribute="bottom" constant="51" id="B6W-TQ-lCt"/>
                             <constraint firstItem="8kQ-hj-sfA" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="Bxa-tL-2LL"/>
                             <constraint firstItem="S14-RU-CFD" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="FYX-me-iVm"/>
                             <constraint firstItem="pkJ-g7-cwG" firstAttribute="top" secondItem="3" secondAttribute="top" constant="341" id="MWo-ap-SZN"/>
                             <constraint firstItem="8kQ-hj-sfA" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="RY6-xl-H4M"/>
+                            <constraint firstAttribute="trailing" secondItem="pkJ-g7-cwG" secondAttribute="trailing" constant="80" id="XsS-mg-I95"/>
                             <constraint firstAttribute="bottom" secondItem="pkJ-g7-cwG" secondAttribute="bottom" constant="5" id="iIm-A1-fgk"/>
                             <constraint firstItem="pkJ-g7-cwG" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="5" id="oTc-qm-teA"/>
                             <constraint firstItem="S14-RU-CFD" firstAttribute="leading" secondItem="WQu-6J-dgK" secondAttribute="leading" type="default" id="of1-R2-gqn"/>
@@ -125,11 +125,10 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zFG-hm-UX9">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="65" id="MJc-Ir-Vwk"/>
-                                    <constraint firstAttribute="height" constant="39" id="rts-6r-m25"/>
+                                    <constraint firstAttribute="height" constant="19" id="Dcx-hJ-kaz"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                <state key="normal" title="Deal">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                <state key="normal" title="New Game">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -140,25 +139,36 @@
                                     <action selector="dealNewCards" destination="jd4-XZ-YK3" eventType="touchUpInside" id="Z9v-o8-jls"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5f-JM-z1Q">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="65" id="HxR-HG-58u"/>
+                                    <constraint firstAttribute="height" constant="19" id="nxv-hE-oF6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                <state key="normal" title="+3 Cards">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dealMoreCards:" destination="jd4-XZ-YK3" eventType="touchUpInside" id="wcG-w3-rq9"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ieh-C6-ABW">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="ecD-IU-SAF"/>
-                                    <constraint firstAttribute="width" constant="78" id="pXC-du-K2E"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="v9x-Y6-RAk">
-                                <connections>
-                                    <action selector="historySliderChanged:" destination="jd4-XZ-YK3" eventType="valueChanged" id="ci7-yA-PJz"/>
-                                </connections>
-                            </slider>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MFb-Ou-0aV">
-                                <color key="backgroundColor" red="0.25098040699958801" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="336" id="msJ-iw-Opc"/>
+                                    <constraint firstAttribute="height" constant="336" id="k44-Gj-APa"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="5JB-W4-bfF">
                                     <size key="itemSize" width="70" height="100"/>
@@ -203,25 +213,25 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="O8S-z1-7P4" secondAttribute="trailing" constant="80" id="1c0-sQ-phB"/>
+                            <constraint firstItem="Z5f-JM-z1Q" firstAttribute="centerY" secondItem="O8S-z1-7P4" secondAttribute="centerY" type="default" id="26Y-RG-U20"/>
                             <constraint firstItem="ieh-C6-ABW" firstAttribute="trailing" secondItem="TMa-NP-a1d" secondAttribute="trailing" type="default" id="6AU-vM-HAf"/>
                             <constraint firstItem="O8S-z1-7P4" firstAttribute="leading" secondItem="TMa-NP-a1d" secondAttribute="leading" constant="5" id="6lX-cG-t9o"/>
                             <constraint firstItem="MFb-Ou-0aV" firstAttribute="trailing" secondItem="TMa-NP-a1d" secondAttribute="trailing" type="default" id="7Ak-8K-nUl"/>
-                            <constraint firstAttribute="bottom" secondItem="ieh-C6-ABW" secondAttribute="bottom" constant="51" id="K4J-gi-nUl"/>
+                            <constraint firstAttribute="trailing" secondItem="Z5f-JM-z1Q" secondAttribute="trailing" constant="13" id="Co8-gG-iXC"/>
+                            <constraint firstItem="Z5f-JM-z1Q" firstAttribute="leading" secondItem="ieh-C6-ABW" secondAttribute="leading" type="default" id="FrN-G8-rVX"/>
                             <constraint firstItem="MFb-Ou-0aV" firstAttribute="leading" secondItem="TMa-NP-a1d" secondAttribute="leading" type="default" id="VEd-Xr-cbE"/>
                             <constraint firstAttribute="bottom" secondItem="O8S-z1-7P4" secondAttribute="bottom" constant="5" id="VZF-0Q-3gY"/>
-                            <constraint firstItem="v9x-Y6-RAk" firstAttribute="trailing" secondItem="TMa-NP-a1d" secondAttribute="trailing" type="default" id="XbS-km-dFz"/>
                             <constraint firstItem="MFb-Ou-0aV" firstAttribute="top" secondItem="TMa-NP-a1d" secondAttribute="top" type="default" id="Yn0-aw-LkB"/>
-                            <constraint firstItem="zFG-hm-UX9" firstAttribute="leading" secondItem="ieh-C6-ABW" secondAttribute="leading" type="default" id="ehl-p0-Y4i"/>
-                            <constraint firstAttribute="bottom" secondItem="zFG-hm-UX9" secondAttribute="bottom" constant="11" id="fe8-Fk-Lx2"/>
-                            <constraint firstItem="v9x-Y6-RAk" firstAttribute="bottom" secondItem="TMa-NP-a1d" secondAttribute="bottom" type="default" id="ifJ-5X-pCu"/>
-                            <constraint firstItem="v9x-Y6-RAk" firstAttribute="leading" secondItem="zFG-hm-UX9" secondAttribute="leading" type="default" id="p32-D3-rpO"/>
-                            <constraint firstItem="O8S-z1-7P4" firstAttribute="top" secondItem="TMa-NP-a1d" secondAttribute="top" constant="341" id="xf9-CC-V2n"/>
+                            <constraint firstItem="ieh-C6-ABW" firstAttribute="top" secondItem="O8S-z1-7P4" secondAttribute="top" type="default" id="ams-D3-baA"/>
+                            <constraint firstItem="O8S-z1-7P4" firstAttribute="top" secondItem="TMa-NP-a1d" secondAttribute="top" constant="341" id="fOt-KC-CKl"/>
+                            <constraint firstItem="zFG-hm-UX9" firstAttribute="trailing" secondItem="Z5f-JM-z1Q" secondAttribute="trailing" type="default" id="kmt-8U-qrf"/>
+                            <constraint firstItem="zFG-hm-UX9" firstAttribute="leading" secondItem="Z5f-JM-z1Q" secondAttribute="leading" type="default" id="vzm-pj-dHV"/>
+                            <constraint firstAttribute="bottom" secondItem="zFG-hm-UX9" secondAttribute="bottom" constant="6" id="zpO-FU-cjH"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Set" image="set.png" id="nud-LQ-AiS"/>
                     <connections>
                         <outlet property="cardCollectionView" destination="MFb-Ou-0aV" id="Axk-KK-eSd"/>
-                        <outlet property="historySlider" destination="v9x-Y6-RAk" id="GaS-7L-f2O"/>
                         <outlet property="scoreLabel" destination="ieh-C6-ABW" id="dsx-JS-EbB"/>
                         <outlet property="statusView" destination="O8S-z1-7P4" id="v93-HE-zPa"/>
                     </connections>
@@ -379,6 +389,68 @@
         <image name="set.png" width="30" height="30"/>
         <image name="settings.png" width="30" height="30"/>
     </resources>
+    <classes>
+        <class className="CardGameViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dealMoreCards:" candidateClass="UIButton"/>
+                <relationship kind="action" name="flipCard:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="historySliderChanged:" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="cardCollectionView" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="historySlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="statusView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="GameResultsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameResultsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="display" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PlayingCardCollectionViewCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardCollectionViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="playingCardView" candidateClass="PlayingCardView"/>
+            </relationships>
+        </class>
+        <class className="PlayingCardGameViewController" superclassName="CardGameViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardGameViewController.h"/>
+        </class>
+        <class className="PlayingCardView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayingCardView.h"/>
+        </class>
+        <class className="SetCardCollectionViewCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetCardCollectionViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="setCardView" candidateClass="SetCardView"/>
+            </relationships>
+        </class>
+        <class className="SetCardGameViewController" superclassName="CardGameViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetCardGameViewController.h"/>
+        </class>
+        <class className="SetCardView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetCardView.h"/>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

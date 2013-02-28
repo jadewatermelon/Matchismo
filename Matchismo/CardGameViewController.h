@@ -24,9 +24,6 @@
 @property (nonatomic) NSUInteger mismatchPenalty;
 @property (nonatomic) NSUInteger matchBonus;
 
-// abstract methods left over from assignment 2 -- no longer needed
-
-//- (void)updateUIButton:(UIButton *)button withCard:(Card *)card;
 // concrete methods - do not need to be overwritten
 - (void)clearStatus:(UIView *)view;
 - (NSAttributedString *)cardToAttributedString:(Card *)card;

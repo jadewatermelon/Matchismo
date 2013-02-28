@@ -23,7 +23,7 @@
 
 @implementation CardGameViewController
 
-# pragma mark - CollectionView Protocol Implementation -
+#pragma mark - CollectionView Protocol Implementation -
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -45,6 +45,8 @@
     return cell;
 }
 
+#pragma mark - Game and Card Handling -
+
 - (CardMatchingGame *)game
 {
     if (!_game)
@@ -58,47 +60,29 @@
     return _game;
 }
 
-- (IBAction)historySliderChanged:(UISlider *)sender
-{
-    int index = (int) [sender value];
-    
-    if (index < 0 || index > [self.game.moveHistory count] - 1)
-        return;
-    
-    //self.lastPlayLabel.alpha = (index < [self.game.moveHistory count] - 1) ? 0.3 : 1.0;
-    //self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory objectAtIndex:index]];
-    [self updateStatus:self.statusView usingMove:[self.game.moveHistory objectAtIndex:index]];
-    self.statusView.alpha = (index < [self.game.moveHistory count] - 1) ? 0.3 : 1.0;
-}
-
 - (IBAction)dealNewCards
 {
     self.game = nil;
     [self clearStatus:self.statusView];
+    [self.cardCollectionView reloadData];
     [self updateUI];
 }
 
-- (void)updateUI
+- (IBAction)dealMoreCards:(UIButton *)sender
 {
-    for (UICollectionViewCell *cell in [self.cardCollectionView visibleCells]) {
-        NSIndexPath *indexPath = [self.cardCollectionView indexPathForCell:cell];
-        Card *card = [self.game cardAtIndex:indexPath.item];
-        [self updateCell:cell usingCard:card animate:YES];
+    // in future is it possible to fill in blanks from cards that were just matched... AUTO_REPLACE below
+    for (int i = 0; i < sender.tag; i++) {
+        [self.game addCardAtIndex:self.game.numCardsInPlay];
     }
+    [self.cardCollectionView reloadData];
     
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    [self updateStatus:self.statusView usingMove:[self.game.moveHistory lastObject]];
-//    self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory lastObject]];
+    [self.cardCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:(self.game.numCardsInPlay- 1) inSection:0]
+                                    atScrollPosition:UICollectionViewScrollPositionBottom
+                                            animated:YES];
     
-    [self.historySlider setMinimumValue:0.0];
-    [self.historySlider setMaximumValue:(float) [self.game.moveHistory count]];
-}
-
--(void)clearStatus:(UIView *)view
-{
-    for (UIView *subview in [view subviews])
-    {
-        [subview removeFromSuperview];
+    if ([self.game.deck isEmpty]) {
+        sender.enabled = NO;
+        sender.alpha = 0.5;
     }
 }
 
@@ -120,7 +104,7 @@
             NSMutableArray *indexPathsForMatchedCards = [[NSMutableArray alloc] init];
             
             for (Card *card in move.cards) {
-                [indexPathsForMatchedCards addObject:[NSIndexPath indexPathForItem:[self.game indexOfCard:card] inSection:[self numberOfSectionsInCollectionView:self.cardCollectionView]-1]];
+                [indexPathsForMatchedCards addObject:[NSIndexPath indexPathForItem:[self.game indexOfCard:card] inSection:0]];
             }
             
             for (Card *card in move.cards) {
@@ -141,6 +125,49 @@
     }
 }
 
+#pragma mark - UI refresh methods -
+
+- (void)updateUI
+{
+    for (UICollectionViewCell *cell in [self.cardCollectionView visibleCells]) {
+        NSIndexPath *indexPath = [self.cardCollectionView indexPathForCell:cell];
+        Card *card = [self.game cardAtIndex:indexPath.item];
+        [self updateCell:cell usingCard:card animate:YES];
+    }
+    
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    [self updateStatus:self.statusView usingMove:[self.game.moveHistory lastObject]];
+//    self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory lastObject]];
+    
+    [self.historySlider setMinimumValue:0.0];
+    [self.historySlider setMaximumValue:(float) [self.game.moveHistory count]];
+}
+
+- (void)viewDidLoad
+{
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableBackground"]];
+}
+
+- (void)clearStatus:(UIView *)view
+{
+    for (UIView *subview in [view subviews])
+    {
+        [subview removeFromSuperview];
+    }
+}
+
+- (IBAction)historySliderChanged:(UISlider *)sender
+{
+    int index = (int) [sender value];
+    
+    if (index < 0 || index > [self.game.moveHistory count] - 1)
+        return;
+    
+    //self.lastPlayLabel.alpha = (index < [self.game.moveHistory count] - 1) ? 0.3 : 1.0;
+    //self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory objectAtIndex:index]];
+    [self updateStatus:self.statusView usingMove:[self.game.moveHistory objectAtIndex:index]];
+    self.statusView.alpha = (index < [self.game.moveHistory count] - 1) ? 0.3 : 1.0;
+}
 
 # pragma mark - Abstract Methods -
 
@@ -166,6 +193,9 @@
     // abstract
 }
 */
+
+#pragma mark - Helper Methods to Strings -
+
 - (NSAttributedString *)cardToAttributedString:(Card *)card
 {
     return nil;

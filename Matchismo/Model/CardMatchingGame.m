@@ -25,7 +25,7 @@
 @property (nonatomic) MoveType currentMoveType;
 @property (nonatomic) int currentScoreChange;
 @end
-
+#pragma mark - Getters and Initializers -
 @implementation CardMatchingGame
 
 - (NSMutableArray *)cards
@@ -58,6 +58,8 @@
     return _results;
 }
 
+#pragma mark Designated Initializer
+
 - (id)initWithCardCount:(NSUInteger)count
               usingDeck:(Deck *)deck
            matchingMode:(NSUInteger)num
@@ -87,6 +89,8 @@
     }
     return self;
 }
+
+#pragma mark - Card Handling -
 
 - (Card *)cardAtIndex:(NSUInteger)index
 {

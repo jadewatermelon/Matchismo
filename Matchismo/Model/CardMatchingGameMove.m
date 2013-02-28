@@ -10,7 +10,7 @@
 
 @implementation CardMatchingGameMove
 
-// designated initializer
+#pragma mark Designated Initializer
 - (id) initWithMoveType:(MoveType)moveType
        withFlippedCards:(NSArray *)flippedCards
         withScoreChange:(NSInteger)scoreChange

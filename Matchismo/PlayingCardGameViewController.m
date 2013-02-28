@@ -113,35 +113,6 @@
     }
 }
 
-/*
-- (void)updateCell:(UICollectionViewCell *)cell usingMove:(CardMatchingGameMove *)move
-{
-    if ([cell isKindOfClass:[PlayingCardStatusCollectionViewCell class]]) {
-        NSArray *playingCardViews = ((PlayingCardStatusCollectionViewCell *)cell).playingCardViews;
-        if ([move isKindOfClass:[CardMatchingGameMove class]]) {
-            CardMatchingGameMove *gameMove = (CardMatchingGameMove *)move;
-            if ([gameMove.cards count] <= [playingCardViews count]) {
-                int i = 0;
-                for (Card *card in gameMove.cards) {
-                    if ([card isKindOfClass:[PlayingCard class]]) {
-                        PlayingCard *playingCard = (PlayingCard *)card;
-                        PlayingCardView *playingCardView = [playingCardViews objectAtIndex:i];
-                        playingCardView.rank = playingCard.rank;
-                        playingCardView.suit = playingCard.suit;
-                        playingCardView.faceUp = YES;
-                        i++;
-                    }
-                }
-            }
-        }
-    } else if ([cell isKindOfClass:[CardGameMoveStatusCollectionViewCell class]]) {
-        UITextView *status = ((CardGameMoveStatusCollectionViewCell *)cell).cardGameStatus;
-        if ([move isKindOfClass:[CardMatchingGameMove class]]) {
-            [self moveToString:(CardMatchingGameMove *)move];
-        }
-    }
-}
-*/
 #pragma mark - Abstract Property Getters -
 
 - (NSString *)cardType
