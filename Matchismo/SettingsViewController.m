@@ -9,15 +9,34 @@
 #import "SettingsViewController.h"
 #include "CardMatchingGameResults.h"
 
-@interface SettingsViewController ()
+@interface SettingsViewController () <UIAlertViewDelegate, UIActionSheetDelegate>
+
+@property (nonatomic, strong) UIAlertView *alert;
 
 @end
 
 @implementation SettingsViewController
 
+- (UIAlertView *)alert {
+    if (!_alert) _alert = [[UIAlertView alloc] initWithTitle:@"Clear Scores"
+                                                     message:@"Are you sure you want to reset all scores?"
+                                                    delegate:self
+                                           cancelButtonTitle:@"No"
+                                           otherButtonTitles:@"Yes", nil];
+    return _alert;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *buttonTitle = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([buttonTitle isEqualToString:@"Yes"]) {
+        [CardMatchingGameResults resetGameResults];
+    }
+}
+
 - (IBAction)clearScores
 {
-    [CardMatchingGameResults resetGameResults];
+    [self.alert show];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
