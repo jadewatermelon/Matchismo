@@ -104,6 +104,16 @@
 {
     if ([self.game numAvailableMatches]) {
         self.hintIndexes = [self.game possibleMatch];
+/*
+        for (int i = 0; i < [self.hintIndexes count]; i++) {
+            int index = [self.hintIndexes[i] intValue];
+            UICollectionViewCell *cell = [self.cardCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+            Card *card = [self.game cardAtIndex:index];
+            
+            cell.selected = YES;
+            [self updateCell:cell usingCard:card animate:YES];
+        }
+*/        
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No matches present"
                                                         message:@"Add more cards or deal new game."
