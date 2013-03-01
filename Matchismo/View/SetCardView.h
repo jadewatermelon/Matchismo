@@ -12,5 +12,6 @@
 
 @property (nonatomic) NSUInteger number, symbol, shading, color;
 @property (nonatomic) BOOL faceUp;
+@property (nonatomic) BOOL hint;
 
 @end

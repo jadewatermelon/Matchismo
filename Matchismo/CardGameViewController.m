@@ -15,10 +15,12 @@
 
 //@property (weak, nonatomic) IBOutlet UILabel *lastPlayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *matchesLabel;
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *statusView;
 @property (weak, nonatomic) IBOutlet UIButton *dealMoreCards;
+@property (strong, nonatomic) NSArray *hintIndexes;
 
 @end
 
@@ -95,7 +97,22 @@
         [self.cardCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:(self.game.numCardsInPlay- 1) inSection:0]
                                         atScrollPosition:UICollectionViewScrollPositionBottom
                                                 animated:YES];
-    }    
+    }
+    [self updateUI];
+}
+- (IBAction)hint
+{
+    if ([self.game numAvailableMatches]) {
+        self.hintIndexes = [self.game possibleMatch];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No matches present"
+                                                        message:@"Add more cards or deal new game."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    [self updateUI];
 }
 
 #define AUTO_REPLACE false
@@ -120,6 +137,7 @@
             }
             
             [self.cardCollectionView deleteItemsAtIndexPaths:indexPathsForMatchedCards];
+            self.hintIndexes = nil;
             if (AUTO_REPLACE)
             {
                 for (NSIndexPath *indexPath in indexPathsForMatchedCards) {
@@ -140,10 +158,12 @@
     for (UICollectionViewCell *cell in [self.cardCollectionView visibleCells]) {
         NSIndexPath *indexPath = [self.cardCollectionView indexPathForCell:cell];
         Card *card = [self.game cardAtIndex:indexPath.item];
+        if ([self.hintIndexes containsObject:@(indexPath.item)]) cell.selected = YES;
         [self updateCell:cell usingCard:card animate:YES];
     }
     
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.matchesLabel.text = [NSString stringWithFormat:@"Matches: %d", self.game.numAvailableMatches];
     [self updateStatus:self.statusView usingMove:[self.game.moveHistory lastObject]];
 //    self.lastPlayLabel.attributedText = [self moveToAttributedString:[self.game.moveHistory lastObject]];
     
@@ -154,6 +174,7 @@
 - (void)viewDidLoad
 {
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tableBackground"]];
+    self.matchesLabel.text = [NSString stringWithFormat:@"Matches: %d", self.game.numAvailableMatches];
 }
 
 - (void)clearStatus:(UIView *)view

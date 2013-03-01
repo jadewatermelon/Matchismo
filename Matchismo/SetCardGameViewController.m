@@ -33,16 +33,39 @@
             setCardView.number = setCard.number;
             setCardView.symbol = setCard.symbol;
             setCardView.shading = setCard.shading;
-            setCardView.color = setCard.color;
-            if (animate && setCardView.faceUp != setCard.isFaceUp) {
-                [UIView transitionWithView:setCardView
-                                  duration:0.5
-                                   options:UIViewAnimationOptionTransitionCrossDissolve
-                                animations:^{
-                                }completion:NULL];
+            setCardView.color = setCard.color;         
+            for (UIView * subview in [setCardView subviews]) {
+                if (animate) {
+                    [UIView transitionWithView:setCardView
+                                      duration:0.2
+                                       options:UIViewAnimationOptionTransitionCrossDissolve
+                                    animations:^{subview.alpha = 0.0;}
+                                     completion:^(BOOL finished){ [subview removeFromSuperview]; }];
+                } else {
+                    [subview removeFromSuperview];
+                }
             }
+            
             setCardView.faceUp = setCard.isFaceUp;
             setCardView.alpha = setCard.isUnplayable ? 0.0 : 1.0;
+            
+            if (cell.isSelected) {
+                NSString *hint = @"🔵";
+                UILabel *hintView = [[UILabel alloc] initWithFrame:CGRectMake(setCardView.frame.origin.x,
+                                                                                 setCardView.frame.origin.y,
+                                                                                 setCardView.bounds.size.width,
+                                                                                 setCardView.bounds.size.height)];
+                hintView.adjustsFontSizeToFitWidth=YES;
+                hintView.font = [UIFont systemFontOfSize:20];
+                hintView.textAlignment = NSTextAlignmentCenter;
+                
+                hintView.backgroundColor=[UIColor clearColor];
+                hintView.text = hint;
+                hintView.alpha = 0.5;
+                
+                [setCardView addSubview:hintView];
+                cell.selected = NO;
+            }
 
         }
     }

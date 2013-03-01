@@ -24,6 +24,10 @@
 @property (nonatomic, readwrite) NSMutableArray *moveHistory; // of type CardMatchingGameMove
 @property (nonatomic) MoveType currentMoveType;
 @property (nonatomic) int currentScoreChange;
+
+@property (strong,nonatomic) NSMutableArray *availableMatches;
+@property (nonatomic, readwrite) NSUInteger numAvailableMatches;
+
 @end
 #pragma mark - Getters and Initializers -
 @implementation CardMatchingGame
@@ -48,7 +52,14 @@
 
 - (NSUInteger)numCardsInPlay
 {
-    return [self.cards count];
+    _numCardsInPlay = [self.cards count];
+    return _numCardsInPlay;
+}
+
+- (NSMutableArray *)availableMatches
+{
+    if (!_availableMatches) _availableMatches = [[NSMutableArray alloc] init];
+    return _availableMatches;
 }
 
 - (CardMatchingGameResults *)results
@@ -197,5 +208,59 @@
         self.currentMoveType = MoveTypeMismatch;
         self.currentScoreChange -= self.mismatchPenalty;
     }
+}
+
+- (NSUInteger)numAvailableMatches
+{
+    NSUInteger numMatches = 0;
+    self.availableMatches = nil;
+   
+    if (self.numCardsToMatch == 2) {
+        for (int i = 0; i < [self.cards count]; i++) {
+            Card* card = self.cards[i];
+            for (int j = i+1; j < [self.cards count]; j++) {
+                if (i != j) {
+                    NSArray *possibleMatch = [@[@(i),@(j)] sortedArrayUsingSelector:@selector(intValue)];
+                    if (![self.availableMatches containsObject:possibleMatch]) {
+                        NSArray *cardsToMatch = @[self.cards[j]];
+                        if ([card match:cardsToMatch]) {
+                            numMatches++;
+                            [self.availableMatches addObject:possibleMatch];
+                        }
+                    }
+                }
+            }
+        }
+    } else if (self.numCardsToMatch == 3) {
+        for (int i = 0; i < [self.cards count]; i++) {
+            Card* card = self.cards[i];
+            for (int j = i+1; j < [self.cards count]; j++) {
+                for (int k = j+1; k < [self.cards count]; k++) {
+                    if (i != j && i != k && j != k) {
+                        NSArray *possibleMatch = [@[@(i),@(j),@(k)] sortedArrayUsingSelector:@selector(intValue)];
+                        if (![self.availableMatches containsObject:possibleMatch]) {
+                            NSArray *cardsToMatch = @[self.cards[j], self.cards[k]];
+                            if ([card match:cardsToMatch]) {
+                                numMatches++;
+                                [self.availableMatches addObject:possibleMatch];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    _numAvailableMatches = numMatches;
+    return _numAvailableMatches;
+}
+
+- (NSArray *)possibleMatch
+{
+    NSArray *aMatch = nil;
+    
+    if (self.numAvailableMatches)
+        aMatch = self.availableMatches[arc4random() % [self.availableMatches count]];
+    
+    return aMatch;
 }
 @end

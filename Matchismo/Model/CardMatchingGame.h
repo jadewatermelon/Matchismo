@@ -27,11 +27,13 @@
 - (NSUInteger)indexOfCard:(Card *) card;
 - (void)removeCardAtIndex:(NSUInteger)index;
 - (void)addCardAtIndex:(NSUInteger)index;
+- (NSArray *)possibleMatch;
 
 @property (strong, nonatomic) Deck *deck;
 @property (nonatomic, readonly) NSInteger score;
 @property (nonatomic, readonly) NSUInteger numCardsInPlay;
 @property (nonatomic, readonly) NSMutableArray *moveHistory; // of type CardMatchingGameMove
 @property (nonatomic) CardMatchingGameResults *results;
+@property (nonatomic, readonly) NSUInteger numAvailableMatches;
 
 @end
